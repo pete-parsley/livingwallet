@@ -5,6 +5,7 @@
     <modules>
         <module>livingwallet-ingestion</module>
         <module>livingwallet-model</module>
+        <module>livingwallet-core</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

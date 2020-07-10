@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/livingwallet.iml" filepath="$PROJECT_DIR$/livingwallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/livingwallet-core/livingwallet-core.iml" filepath="$PROJECT_DIR$/livingwallet-core/livingwallet-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/livingwallet-ingestion/livingwallet-ingestion.iml" filepath="$PROJECT_DIR$/livingwallet-ingestion/livingwallet-ingestion.iml" />
       <module fileurl="file://$PROJECT_DIR$/livingwallet-model/livingwallet-model.iml" filepath="$PROJECT_DIR$/livingwallet-model/livingwallet-model.iml" />
     </modules>
