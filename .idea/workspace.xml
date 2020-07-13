@@ -2,22 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5feee1c5-6d20-4e7b-a783-6c732bd80ea5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/livingwallet-core/livingwallet-core.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/livingwallet-core/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/DBWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyParserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/livingwallet-core/src/main/java/com/bigdataworkshop/livingwallet/LivingwalletApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/src/main/java/com/bigdataworkshop/livingwallet/LivingwalletApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/WebParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/WebParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-model/livingwallet-model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-model/livingwallet-model.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bigdataworkshop/livingwallet/LivingwalletApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/src/main/java/com/bigdataworkshop/livingwallet/LivingwalletApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bigdataworkshop/livingwallet/ServletInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/src/main/java/com/bigdataworkshop/livingwallet/ServletInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/bigdataworkshop/livingwallet/LivingwalletApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,22 +137,50 @@
       <screen x="0" y="0" width="1366" height="732" />
     </state>
     <state x="467" y="122" key="FileChooserDialogImpl/0.0.1366.732@0.0.1366.732" timestamp="1594382696357" />
-    <state width="1320" height="154" key="GridCell.Tab.0.bottom" timestamp="1594384774278">
-      <screen x="0" y="0" width="1366" height="732" />
+    <state width="1874" height="305" key="GridCell.Tab.0.bottom" timestamp="1594651217914">
+      <screen x="0" y="0" width="1920" height="1812" />
     </state>
-    <state width="1320" height="154" key="GridCell.Tab.0.bottom/0.0.1366.732@0.0.1366.732" timestamp="1594384774278" />
-    <state width="1320" height="154" key="GridCell.Tab.0.center" timestamp="1594384774278">
-      <screen x="0" y="0" width="1366" height="732" />
+    <state width="1320" height="394" key="GridCell.Tab.0.bottom/0.0.1366.732@0.0.1366.732" timestamp="1594388391350" />
+    <state width="1874" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1812@0.0.1920.1812" timestamp="1594651217914" />
+    <state width="1874" height="513" key="GridCell.Tab.0.bottom/0.0.1920.1932@0.0.1920.1932" timestamp="1594646562724" />
+    <state width="1874" height="305" key="GridCell.Tab.0.center" timestamp="1594651217913">
+      <screen x="0" y="0" width="1920" height="1812" />
     </state>
-    <state width="1320" height="154" key="GridCell.Tab.0.center/0.0.1366.732@0.0.1366.732" timestamp="1594384774278" />
-    <state width="1320" height="154" key="GridCell.Tab.0.left" timestamp="1594384774277">
-      <screen x="0" y="0" width="1366" height="732" />
+    <state width="1320" height="394" key="GridCell.Tab.0.center/0.0.1366.732@0.0.1366.732" timestamp="1594388391350" />
+    <state width="1874" height="305" key="GridCell.Tab.0.center/0.0.1920.1812@0.0.1920.1812" timestamp="1594651217913" />
+    <state width="1874" height="513" key="GridCell.Tab.0.center/0.0.1920.1932@0.0.1920.1932" timestamp="1594646562724" />
+    <state width="1874" height="305" key="GridCell.Tab.0.left" timestamp="1594651217913">
+      <screen x="0" y="0" width="1920" height="1812" />
     </state>
-    <state width="1320" height="154" key="GridCell.Tab.0.left/0.0.1366.732@0.0.1366.732" timestamp="1594384774277" />
-    <state width="1320" height="154" key="GridCell.Tab.0.right" timestamp="1594384774278">
-      <screen x="0" y="0" width="1366" height="732" />
+    <state width="1320" height="394" key="GridCell.Tab.0.left/0.0.1366.732@0.0.1366.732" timestamp="1594388391349" />
+    <state width="1874" height="305" key="GridCell.Tab.0.left/0.0.1920.1812@0.0.1920.1812" timestamp="1594651217913" />
+    <state width="1874" height="513" key="GridCell.Tab.0.left/0.0.1920.1932@0.0.1920.1932" timestamp="1594646562723" />
+    <state width="1874" height="305" key="GridCell.Tab.0.right" timestamp="1594651217913">
+      <screen x="0" y="0" width="1920" height="1812" />
     </state>
-    <state width="1320" height="154" key="GridCell.Tab.0.right/0.0.1366.732@0.0.1366.732" timestamp="1594384774278" />
+    <state width="1320" height="394" key="GridCell.Tab.0.right/0.0.1366.732@0.0.1366.732" timestamp="1594388391350" />
+    <state width="1874" height="305" key="GridCell.Tab.0.right/0.0.1920.1812@0.0.1920.1812" timestamp="1594651217913" />
+    <state width="1874" height="513" key="GridCell.Tab.0.right/0.0.1920.1932@0.0.1920.1932" timestamp="1594646562724" />
+    <state width="1874" height="418" key="GridCell.Tab.1.bottom" timestamp="1594650895651">
+      <screen x="0" y="0" width="1920" height="1812" />
+    </state>
+    <state width="1874" height="418" key="GridCell.Tab.1.bottom/0.0.1920.1812@0.0.1920.1812" timestamp="1594650895651" />
+    <state width="1874" height="474" key="GridCell.Tab.1.bottom/0.0.1920.1932@0.0.1920.1932" timestamp="1594634504674" />
+    <state width="1874" height="418" key="GridCell.Tab.1.center" timestamp="1594650895650">
+      <screen x="0" y="0" width="1920" height="1812" />
+    </state>
+    <state width="1874" height="418" key="GridCell.Tab.1.center/0.0.1920.1812@0.0.1920.1812" timestamp="1594650895650" />
+    <state width="1874" height="474" key="GridCell.Tab.1.center/0.0.1920.1932@0.0.1920.1932" timestamp="1594634504674" />
+    <state width="1874" height="418" key="GridCell.Tab.1.left" timestamp="1594650895650">
+      <screen x="0" y="0" width="1920" height="1812" />
+    </state>
+    <state width="1874" height="418" key="GridCell.Tab.1.left/0.0.1920.1812@0.0.1920.1812" timestamp="1594650895650" />
+    <state width="1874" height="474" key="GridCell.Tab.1.left/0.0.1920.1932@0.0.1920.1932" timestamp="1594634504673" />
+    <state width="1874" height="418" key="GridCell.Tab.1.right" timestamp="1594650895650">
+      <screen x="0" y="0" width="1920" height="1812" />
+    </state>
+    <state width="1874" height="418" key="GridCell.Tab.1.right/0.0.1920.1812@0.0.1920.1812" timestamp="1594650895650" />
+    <state width="1874" height="474" key="GridCell.Tab.1.right/0.0.1920.1932@0.0.1920.1932" timestamp="1594634504674" />
     <state x="217" y="22" key="Maven.ArtifactSearchDialog" timestamp="1594382317805">
       <screen x="0" y="0" width="1366" height="732" />
     </state>
@@ -175,10 +193,14 @@
       <screen x="0" y="0" width="1366" height="732" />
     </state>
     <state x="167" y="0" key="SettingsEditor/0.0.1366.732@0.0.1366.732" timestamp="1594371036959" />
-    <state x="362" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1594382642689">
+    <state x="279" y="100" key="Vcs.Push.Dialog.v2" timestamp="1594388376832">
       <screen x="0" y="0" width="1366" height="732" />
     </state>
-    <state x="362" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.732@0.0.1366.732" timestamp="1594382642688" />
+    <state x="279" y="100" key="Vcs.Push.Dialog.v2/0.0.1366.732@0.0.1366.732" timestamp="1594388376832" />
+    <state x="362" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1594626666304">
+      <screen x="0" y="0" width="1366" height="732" />
+    </state>
+    <state x="362" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.732@0.0.1366.732" timestamp="1594626666304" />
     <state x="476" y="284" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594371301524">
       <screen x="0" y="0" width="1366" height="732" />
     </state>
@@ -191,5 +213,16 @@
       <screen x="0" y="0" width="1366" height="732" />
     </state>
     <state x="346" y="53" width="672" height="678" key="search.everywhere.popup/0.0.1366.732@0.0.1366.732" timestamp="1594374781026" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/livingwallet-ingestion/src/main/java/com/bigdataworkshop/livingwallet/ingestion/CurrencyService.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

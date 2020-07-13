@@ -11,22 +11,18 @@ public class CurrencyService {
 
     @Autowired
     private CurrencyParser currencyParser;
+    @Autowired
+    private DBWriter dbWriter;
 
-    private Currency searchCurrency;
 
     public CurrencyService() {
+
     }
 
-    public Currency getSearchCurrency() {
-        return searchCurrency;
-    }
-
-    public void setSearchCurrency(Currency searchCurrency) {
-        this.searchCurrency = searchCurrency;
-    }
-
-    public String getCurrencyRate() {
-        return "dupa";
+    public String getCurrencyRate(Currency currency) {
+        String rate = currencyParser.getRate(currency);
+        dbWriter.storeDataPoint(Float.parseFloat(rate));
+        return rate;
     }
 
 

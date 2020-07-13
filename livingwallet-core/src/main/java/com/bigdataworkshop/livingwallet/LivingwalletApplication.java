@@ -24,7 +24,6 @@ public class LivingwalletApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		Currency cur = Currency.USD;
-		cs.setSearchCurrency(cur);
-		System.out.println(cs.getCurrencyRate());
+		System.out.println(cs.getCurrencyRate(cur));
 	}
 }
