@@ -20,21 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5feee1c5-6d20-4e7b-a783-6c732bd80ea5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-core/livingwallet-core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/livingwallet-core.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-core/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-core/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/livingwallet-ingestion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/livingwallet-ingestion.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/target/classes/META-INF/livingwallet-ingestion.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-ingestion/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-ingestion/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-model/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-model/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet-model/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-model/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/livingwallet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/livingwallet.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/livingwallet.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/livingwallet-core/src/main/java/com/bigdataworkshop/livingwallet/LivingwalletApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/livingwallet-core/src/main/java/com/bigdataworkshop/livingwallet/LivingwalletApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,26 +146,26 @@
     </state>
     <state x="467" y="122" key="FileChooserDialogImpl/0.0.1366.732@0.0.1366.732" timestamp="1594382696357" />
     <state x="656" y="173" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594392999016" />
-    <state width="1877" height="274" key="GridCell.Tab.0.bottom" timestamp="1594467784432">
+    <state width="1876" height="274" key="GridCell.Tab.0.bottom" timestamp="1594533184125">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1320" height="154" key="GridCell.Tab.0.bottom/0.0.1366.732@0.0.1366.732" timestamp="1594384774278" />
-    <state width="1877" height="274" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594467784432" />
-    <state width="1877" height="274" key="GridCell.Tab.0.center" timestamp="1594467784432">
+    <state width="1876" height="274" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594533184125" />
+    <state width="1876" height="274" key="GridCell.Tab.0.center" timestamp="1594533184125">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1320" height="154" key="GridCell.Tab.0.center/0.0.1366.732@0.0.1366.732" timestamp="1594384774278" />
-    <state width="1877" height="274" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594467784432" />
-    <state width="1877" height="274" key="GridCell.Tab.0.left" timestamp="1594467784432">
+    <state width="1876" height="274" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594533184125" />
+    <state width="1876" height="274" key="GridCell.Tab.0.left" timestamp="1594533184125">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1320" height="154" key="GridCell.Tab.0.left/0.0.1366.732@0.0.1366.732" timestamp="1594384774277" />
-    <state width="1877" height="274" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594467784432" />
-    <state width="1877" height="274" key="GridCell.Tab.0.right" timestamp="1594467784432">
+    <state width="1876" height="274" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594533184125" />
+    <state width="1876" height="274" key="GridCell.Tab.0.right" timestamp="1594533184125">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1320" height="154" key="GridCell.Tab.0.right/0.0.1366.732@0.0.1366.732" timestamp="1594384774278" />
-    <state width="1877" height="274" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594467784432" />
+    <state width="1876" height="274" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594533184125" />
     <state x="305" y="31" key="Maven.ArtifactSearchDialog" timestamp="1594391859648">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -193,10 +180,10 @@
     </state>
     <state x="167" y="0" key="SettingsEditor/0.0.1366.732@0.0.1366.732" timestamp="1594371036959" />
     <state x="235" y="0" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594473760625" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594467549285">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1594473973895">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594467549285" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594473973895" />
     <state x="362" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1594382642689">
       <screen x="0" y="0" width="1366" height="732" />
     </state>

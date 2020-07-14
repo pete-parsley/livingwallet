@@ -20,7 +20,6 @@ public class LivingwalletApplication implements ApplicationRunner {
 
 	}
 
-
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		Currency cur = Currency.USD;
