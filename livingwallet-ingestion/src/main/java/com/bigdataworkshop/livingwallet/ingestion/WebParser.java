@@ -5,5 +5,5 @@ import org.jsoup.nodes.Document;
 
 public interface WebParser {
 
-    Document parseUrl(Currency currency);
+    String getRate(Currency currency);
 }
