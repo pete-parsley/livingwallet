@@ -1,3 +1,6 @@
+C:\Users\Piotrek\IdeaProjects\livingwallet\livingwallet-ingestion\src\main\java\com\bigdataworkshop\livingwallet\ingestion\DBWriter.java
 C:\Users\Piotrek\IdeaProjects\livingwallet\livingwallet-ingestion\src\main\java\com\bigdataworkshop\livingwallet\ingestion\WebParser.java
 C:\Users\Piotrek\IdeaProjects\livingwallet\livingwallet-ingestion\src\main\java\com\bigdataworkshop\livingwallet\ingestion\CurrencyParser.java
+C:\Users\Piotrek\IdeaProjects\livingwallet\livingwallet-ingestion\src\main\java\com\bigdataworkshop\livingwallet\ingestion\KafkaCurrencyProducer.java
+C:\Users\Piotrek\IdeaProjects\livingwallet\livingwallet-ingestion\src\main\java\com\bigdataworkshop\livingwallet\ingestion\KafkaCurrencyConsumer.java
 C:\Users\Piotrek\IdeaProjects\livingwallet\livingwallet-ingestion\src\main\java\com\bigdataworkshop\livingwallet\ingestion\CurrencyService.java

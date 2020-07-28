@@ -10,9 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class LivingwalletApplication implements ApplicationRunner {
+public class LivingwalletApplication  {
 	@Autowired
 	private CurrencyService cs;
+
 
 	public static void main(String[] args) {
 
@@ -20,9 +21,18 @@ public class LivingwalletApplication implements ApplicationRunner {
 
 	}
 
-	@Override
+
 	public void run(ApplicationArguments args) throws Exception {
-		Currency cur = Currency.USD;
-		System.out.println(cs.getCurrencyRate(cur));
+
+		System.out.println("Hello World");
+/*
+		while(true) {
+			cs.getCurrencyRate(Currency.CHF);
+			cs.getCurrencyRate(Currency.USD);
+			cs.getCurrencyRate(Currency.EUR);
+			Thread.sleep(5000);
+		}
+		*/
+
 	}
 }

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="livingwallet-core" />
+        <module name="livingwallet-ui" />
         <module name="livingwallet-model" />
         <module name="livingwallet-ingestion" />
       </profile>
@@ -16,6 +17,7 @@
       <module name="livingwallet-core" target="11" />
       <module name="livingwallet-ingestion" target="11" />
       <module name="livingwallet-model" target="11" />
+      <module name="livingwallet-ui" target="11" />
       <module name="wallet-datamodel" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -24,6 +26,7 @@
       <module name="livingwallet-core" options="-parameters" />
       <module name="livingwallet-ingestion" options="-parameters" />
       <module name="livingwallet-model" options="-parameters" />
+      <module name="livingwallet-ui" options="-parameters" />
       <module name="wallet-datamodel" options="-parameters" />
     </option>
   </component>

@@ -1,3 +1,7 @@
+com\bigdataworkshop\livingwallet\ingestion\KafkaCurrencyConsumer.class
+com\bigdataworkshop\livingwallet\ingestion\KafkaCurrencyProducer.class
+com\bigdataworkshop\livingwallet\ingestion\CurrencyParser$1.class
+com\bigdataworkshop\livingwallet\ingestion\CurrencyService.class
 com\bigdataworkshop\livingwallet\ingestion\CurrencyParser.class
 com\bigdataworkshop\livingwallet\ingestion\WebParser.class
-com\bigdataworkshop\livingwallet\ingestion\CurrencyService.class
+com\bigdataworkshop\livingwallet\ingestion\DBWriter.class

@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/livingwallet-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/livingwallet-ingestion/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/livingwallet-model/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/livingwallet-ui/src/main/java" charset="UTF-8" />
   </component>
 </project>
