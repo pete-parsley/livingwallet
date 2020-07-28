@@ -25,14 +25,14 @@ public class LivingwalletApplication  {
 	public void run(ApplicationArguments args) throws Exception {
 
 		System.out.println("Hello World");
-/*
+
 		while(true) {
-			cs.getCurrencyRate(Currency.CHF);
-			cs.getCurrencyRate(Currency.USD);
-			cs.getCurrencyRate(Currency.EUR);
+			cs.saveCurrencyRate(Currency.CHF);
+			cs.saveCurrencyRate(Currency.USD);
+			cs.saveCurrencyRate(Currency.EUR);
 			Thread.sleep(5000);
 		}
-		*/
+
 
 	}
 }

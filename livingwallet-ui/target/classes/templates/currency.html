@@ -9,10 +9,6 @@
 <form action="#" th:action="@{/currency}" th:object="${currency}" method="post">
    <table cellpadding="5">
        <tr>
-           <td><label for="assetShortName">Short Name</label></td>
-           <td><input type="text" th:field="*{assetShortName}" id="assetShortName" placeholder="assetShortName"></td>
-       </tr>
-       <tr>
            <td><label for="assetLongName">Long Name</label></td>
            <td><input type="text" th:field="*{assetLongName}" id="assetLongName" placeholder="assetLongName"></td>
        </tr>
@@ -21,9 +17,9 @@
            <td><input type="text" th:field="*{assetDescription}" id="assetDescription" placeholder="assetDescription"></td>
        </tr>
        <tr>
-           <td><label for="currencyPair">Currency Pair</label></td>
+           <td><label for="assetShortName">Currency Pair</label></td>
            <td>
-               <select th:field="*{currencyPair}" id="currencyPair" placeholder="currencyPair">
+               <select th:field="*{assetShortName}" id="assetShortName" placeholder="assetShortName">
                    <option th:value="'USD->PLN'" th:text="'USD->PLN'"></option>
                    <option th:value="'CHF->PLN'" th:text="'CHF->PLN'"></option>
                    <option th:value="'EUR->PLN'" th:text="'EUR->PLN'"></option>

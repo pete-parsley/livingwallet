@@ -1,13 +1,14 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
+import com.bigdataworkshop.wallet.model.Asset;
 import com.bigdataworkshop.wallet.model.Currency;
-import com.bigdataworkshop.wallet.model.CurrencyAsset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -20,6 +21,9 @@ public class CurrencyService {
     @Autowired
     private KafkaCurrencyProducer kafkaCurrencyProducer;
 
+    @Autowired
+    private AssetsRepository assetsRepository;
+
 
     public CurrencyService() {
 
@@ -29,13 +33,18 @@ public class CurrencyService {
         String rate = currencyParser.getRate(currency);
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateobj = new Date();
-        CurrencyAsset currencyAsset = new CurrencyAsset(Float.parseFloat(rate), dateobj, currency.toString() + "->PLN","shortName","longName","description",0.0f);
+        Asset currencyAsset = new Asset(Float.parseFloat(rate), dateobj, currency.toString() + "->PLN","kurs wymiany USD na PLN","notowania",1.0f,"CURRENCY");
         kafkaCurrencyProducer.sendCurrencyRateMessage(currencyAsset);
         return rate;
     }
 
-    public void saveCurrencyAsset(CurrencyAsset currencyAsset) {
+    public void saveCurrencyAsset(Asset currencyAsset) {
         kafkaCurrencyProducer.sendCurrencyAssetMessage(currencyAsset);
+    }
+
+    public List<Asset> getAllCurrencyAssets(){
+        List<Asset> curr = assetsRepository.getAllCurrencyAssets();
+        return curr;
     }
 
 

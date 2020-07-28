@@ -1,7 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
-
-import com.bigdataworkshop.wallet.model.CurrencyAsset;
+import com.bigdataworkshop.wallet.model.Asset;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ public class KafkaCurrencyProducer {
 
     private final Logger logger = LoggerFactory.getLogger(KafkaCurrencyProducer.class);
 
-    public void sendCurrencyRateMessage(CurrencyAsset currencyAsset) {
+    public void sendCurrencyRateMessage(Asset currencyAsset) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAsset);
@@ -29,7 +28,7 @@ public class KafkaCurrencyProducer {
         kafkaTemplate.send(CURRENCY_RATES,currencyAssetJson.toString());
     }
 
-    public void sendCurrencyAssetMessage(CurrencyAsset currencyAsset) {
+    public void sendCurrencyAssetMessage(Asset currencyAsset) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAsset);
         logger.info(String.format("$$ -> Produced Message -> %s", currencyAssetJson.toString()));
