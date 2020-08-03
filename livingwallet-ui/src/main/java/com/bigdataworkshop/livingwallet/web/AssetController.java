@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,25 +29,38 @@ public class AssetController {
         return "index";
     }
 
-    @GetMapping("/currency")
+    @GetMapping("/currency_buy")
     public String currency(Model model) {
-        logger.info("Redirecting to currency.html");
-        model.addAttribute("currency",new Asset());
-        return "currency";
+        logger.info("Redirecting to currency_buy.html");
+        Asset currencyAsset = new Asset();
+        currencyAsset.setAssetClass("CURRENCY");
+        model.addAttribute("currency",currencyAsset);
+        return "currency_buy";
     }
 
 
-    @PostMapping("/currency")
+    @PostMapping("/currency_buy")
     public String currencyForm(@ModelAttribute Asset currencyAsset) {
         logger.info("Submitted Currency: " + currencyAsset.toString());
+      //  currencyAsset.setPricingDate(currencyAsset.getPricingDateFormatted().toInstant());
         currencyService.saveCurrencyAsset(currencyAsset);
         return "index";
     }
 
     @GetMapping("/currency_mod")
     public String currencyModify(Model model) {
-        logger.info("Redirecting to currency.html");
-        List<Asset> curr = currencyService.getAllCurrencyAssets();
+        logger.info("Redirecting to currency_mod.html");
+        List<Asset> curr = currencyService.getAllCurrencyAssetTransactions();
+        model.addAttribute("currencies", curr);
+        return "currency_mod";
+    }
+
+    @GetMapping("/currency_remove")
+    public String currencyRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, Model model) {
+        logger.info("Redirecting to currency_remove.html");
+        currencyService.removeCurrencyAsset(timestamp,longName,shortName);
+        List<Asset> curr = currencyService.getAllCurrencyAssetTransactions();
+        model.addAttribute("currencies", curr);
         return "currency_mod";
     }
 

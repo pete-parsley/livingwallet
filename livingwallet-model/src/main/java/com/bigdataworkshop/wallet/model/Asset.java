@@ -4,16 +4,16 @@ import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
 
 @Measurement(name="assets", database="livingwallet")
 public class Asset {
 
     @Column(name="pricing")
-    private float pricing;
-    @Column(name="pricing_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date pricingDate;
+    private double pricing;
+    @Column(name="time")
+    private Instant pricingDate;
     @Column(name="short_name")
     private String assetShortName;
     @Column(name="long_name")
@@ -21,15 +21,17 @@ public class Asset {
     @Column(name="description")
     private String assetDescription;
     @Column(name="number_units")
-    private float numberUnits;
+    private double numberUnits;
     @Column(name="asset_class")
     private String assetClass;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate pricingDateFormatted;
 
     public Asset(){
 
     }
 
-    public Asset(float pricing, Date pricingDate, String assetShortName, String assetLongName, String assetDescription, float numberUnits, String assetClass) {
+    public Asset(double pricing, Instant pricingDate, String assetShortName, String assetLongName, String assetDescription, double numberUnits, String assetClass, LocalDate pricingDateFormatted) {
         this.pricing = pricing;
         this.pricingDate = pricingDate;
         this.assetShortName = assetShortName;
@@ -37,21 +39,22 @@ public class Asset {
         this.assetDescription = assetDescription;
         this.numberUnits = numberUnits;
         this.assetClass = assetClass;
+        this.pricingDateFormatted = pricingDateFormatted;
     }
 
-    public float getPricing() {
+    public double getPricing() {
         return pricing;
     }
 
-    public void setPricing(float pricing) {
+    public void setPricing(double pricing) {
         this.pricing = pricing;
     }
 
-    public Date getPricingDate() {
+    public Instant getPricingDate() {
         return pricingDate;
     }
 
-    public void setPricingDate(Date pricingDate) {
+    public void setPricingDate(Instant pricingDate) {
         this.pricingDate = pricingDate;
     }
 
@@ -79,11 +82,11 @@ public class Asset {
         this.assetDescription = assetDescription;
     }
 
-    public float getNumberUnits() {
+    public double getNumberUnits() {
         return numberUnits;
     }
 
-    public void setNumberUnits(float numberUnits) {
+    public void setNumberUnits(double numberUnits) {
         this.numberUnits = numberUnits;
     }
 
@@ -93,5 +96,13 @@ public class Asset {
 
     public void setAssetClass(String assetClass) {
         this.assetClass = assetClass;
+    }
+
+    public LocalDate getPricingDateFormatted() {
+        return pricingDateFormatted;
+    }
+
+    public void setPricingDateFormatted(LocalDate pricingDateFormatted) {
+        this.pricingDateFormatted = pricingDateFormatted;
     }
 }

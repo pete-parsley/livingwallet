@@ -4,6 +4,8 @@ import com.bigdataworkshop.wallet.model.Asset;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,12 @@ public class KafkaCurrencyConsumer {
     private final Logger logger = LoggerFactory.getLogger(KafkaCurrencyConsumer.class);
     @Autowired
     AssetsRepository assetsRepository;
+    ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
 
     @KafkaListener(topics = "currency_rates", groupId = "group_id")
     public void consumeCurrencyRates(String message) throws JsonProcessingException {
         logger.info(String.format("$$ -> Consumed Message -> %s", message));
-        ObjectMapper objectMapper = new ObjectMapper();
+     //   ObjectMapper objectMapper = new ObjectMapper();
         JsonNode currencyRateJson = objectMapper.readTree(message);
         Asset currencyAsset = objectMapper.treeToValue(currencyRateJson,Asset.class);
         logger.info(String.format("$$ -> Currency Rate:  -> %s,%s,%s", currencyAsset.getAssetShortName(),currencyAsset.getPricing(),currencyAsset.getPricingDate()));
@@ -30,10 +33,10 @@ public class KafkaCurrencyConsumer {
     @KafkaListener(topics = "currency_assets", groupId = "group_id")
     public void consumeCurrencyAssets(String message) throws JsonProcessingException {
         logger.info(String.format("$$ -> Consumed Message -> %s", message));
-        ObjectMapper objectMapper = new ObjectMapper();
+    //    ObjectMapper objectMapper = new ObjectMapper();
         JsonNode currencyAssetJson = objectMapper.readTree(message);
         Asset currencyAsset = objectMapper.treeToValue(currencyAssetJson,Asset.class);
         logger.info(String.format("$$ -> Currency Asset:  -> %s,%s,%s,%f,%tD", currencyAsset.getAssetShortName(),currencyAsset.getAssetLongName(), currencyAsset.getAssetDescription(),currencyAsset.getPricing(),currencyAsset.getPricingDate()));
-        assetsRepository.saveCurrencyAsset(currencyAsset);
+        assetsRepository.saveCurrencyAssetBuy(currencyAsset);
     }
 }

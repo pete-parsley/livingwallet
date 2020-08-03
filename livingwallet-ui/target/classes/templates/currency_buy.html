@@ -3,10 +3,11 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Currency Page</title>
+    <title>Currency Buy Page</title>
 </head>
 <body>
-<form action="#" th:action="@{/currency}" th:object="${currency}" method="post">
+<p>Buy Currency Asset:</p>
+<form action="#" th:action="@{/currency_buy}" th:object="${currency}" method="post">
    <table cellpadding="5">
        <tr>
            <td><label for="assetLongName">Long Name</label></td>
@@ -17,12 +18,13 @@
            <td><input type="text" th:field="*{assetDescription}" id="assetDescription" placeholder="assetDescription"></td>
        </tr>
        <tr>
-           <td><label for="assetShortName">Currency Pair</label></td>
+           <td><label for="assetShortName">Currency in Wallet</label></td>
            <td>
                <select th:field="*{assetShortName}" id="assetShortName" placeholder="assetShortName">
-                   <option th:value="'USD->PLN'" th:text="'USD->PLN'"></option>
-                   <option th:value="'CHF->PLN'" th:text="'CHF->PLN'"></option>
-                   <option th:value="'EUR->PLN'" th:text="'EUR->PLN'"></option>
+                   <option th:value="'USD'" th:text="'USD'"></option>
+                   <option th:value="'CHF'" th:text="'CHF'"></option>
+                   <option th:value="'EUR'" th:text="'EUR'"></option>
+                   <option th:value="'PLN'" th:text="'PLN'"></option>
                </select>
        </tr>
        <!--<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>-->
@@ -31,16 +33,22 @@
            <td> <input type="text" th:field="*{pricing}" id="pricing" placeholder="pricing"></td>
        </tr>
        <tr>
-           <td><label for="pricingDate">Pricing Date</label></td>
-           <td> <input type="date" th:field="*{pricingDate}" id="pricingDate" placeholder="pricingDate"></td>
+           <td><label for="pricingDateFormatted">Pricing Date</label></td>
+           <td> <input type="date"  th:field="*{pricingDateFormatted}" id="pricingDateFormatted" placeholder="pricingDateFormatted"></td>
        </tr>
        <tr>
            <td><label for="numberUnits">Number of Units</label></td>
            <td> <input type="text" th:field="*{numberUnits}" id="numberUnits" placeholder="numberUnits"></td>
        </tr>
+       <tr>
+           <td><label for="assetClass">Number of Units</label></td>
+           <td> <input type="text" th:field="*{assetClass}" id="assetClass" placeholder="numberUnits" readonly></td>
+       </tr>
         <!--<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
        <tr><td><input type="submit" value="Add Currency Asset"></td><td></td></tr>
    </table>
 </form>
+<br>
+<a href="/home"><-HOME PAGE</a>
 </body>
 </html>
