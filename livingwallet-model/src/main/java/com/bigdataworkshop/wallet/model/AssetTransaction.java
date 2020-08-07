@@ -7,8 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 
-@Measurement(name="assets", database="livingwallet")
-public class Asset {
+@Measurement(name="currency_asset_transactions", database="livingwallet")
+public class AssetTransaction {
 
     @Column(name="pricing")
     private double pricing;
@@ -24,14 +24,16 @@ public class Asset {
     private double numberUnits;
     @Column(name="asset_class")
     private String assetClass;
+    @Column(name="transaction_type")
+    private String transactionType;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pricingDateFormatted;
 
-    public Asset(){
+    public AssetTransaction(){
 
     }
 
-    public Asset(double pricing, Instant pricingDate, String assetShortName, String assetLongName, String assetDescription, double numberUnits, String assetClass, LocalDate pricingDateFormatted) {
+    public AssetTransaction(double pricing, Instant pricingDate, String assetShortName, String assetLongName, String assetDescription, double numberUnits, String assetClass, LocalDate pricingDateFormatted, String transactionType) {
         this.pricing = pricing;
         this.pricingDate = pricingDate;
         this.assetShortName = assetShortName;
@@ -40,6 +42,7 @@ public class Asset {
         this.numberUnits = numberUnits;
         this.assetClass = assetClass;
         this.pricingDateFormatted = pricingDateFormatted;
+        this.transactionType = transactionType;
     }
 
     public double getPricing() {
@@ -104,5 +107,13 @@ public class Asset {
 
     public void setPricingDateFormatted(LocalDate pricingDateFormatted) {
         this.pricingDateFormatted = pricingDateFormatted;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 }

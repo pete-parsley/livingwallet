@@ -23,7 +23,8 @@
         <td th:text="${currency.assetDescription}"></td>
         <td th:text="${currency.numberUnits}"></td>
         <td th:text="${currency.pricing}"></td>
-        <td><a th:href="@{/currency_remove(timestamp=${currency.pricingDate},long_name=${currency.assetLongName},short_name=${currency.assetShortName})}">REMOVE</a></td>
+        <td th:text="${currency.transactionType}"></td>
+        <td><a th:href="@{/currency_remove(timestamp=${currency.pricingDate},long_name=${currency.assetLongName},short_name=${currency.assetShortName},transaction_type=${currency.transactionType})}">REMOVE</a></td>
     </tr>
 </table>
 <br>

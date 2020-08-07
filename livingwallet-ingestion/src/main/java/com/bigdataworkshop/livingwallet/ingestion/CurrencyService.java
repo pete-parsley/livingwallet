@@ -1,6 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
-import com.bigdataworkshop.wallet.model.Asset;
+import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.bigdataworkshop.wallet.model.Currency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,11 +55,11 @@ public class CurrencyService {
 
     private List<String> getRequiredCurrencyRates(){
         List<String> requiredCurrencies = new ArrayList<>();
-        List<Asset> assets = assetsRepository.getAllCurrencyAssetTransactions();
+        List<AssetTransaction> assetTransactions = assetsRepository.getAllCurrencyAssetTransactions();
 
-        for(Asset asset: assets){
-            if(!requiredCurrencies.contains(asset.getAssetShortName()))
-                requiredCurrencies.add(asset.getAssetShortName());
+        for(AssetTransaction assetTransaction : assetTransactions){
+            if(!requiredCurrencies.contains(assetTransaction.getAssetShortName()))
+                requiredCurrencies.add(assetTransaction.getAssetShortName());
         }
         return requiredCurrencies;
     }
@@ -68,22 +68,22 @@ public class CurrencyService {
         String rate = currencyParser.getRate(currency);
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Instant dateobj = Instant.now();
-        Asset currencyAsset = new Asset(Float.parseFloat(rate), dateobj, currency.toString(),"kurs wymiany walut","notowania",1.0f,"CURRENCY", LocalDate.now());
-        kafkaCurrencyProducer.sendCurrencyRateMessage(currencyAsset);
+        AssetTransaction currencyAssetTransaction = new AssetTransaction(Float.parseFloat(rate), dateobj, currency.toString(),"kurs wymiany walut","notowania",1.0f,"CURRENCY", LocalDate.now(),"");
+        kafkaCurrencyProducer.sendCurrencyRateMessage(currencyAssetTransaction);
         return rate;
     }
 
-    public void saveCurrencyAsset(Asset currencyAsset) {
-        kafkaCurrencyProducer.sendCurrencyAssetMessage(currencyAsset);
+    public void saveCurrencyTransaction(AssetTransaction currencyAssetTransaction) {
+        kafkaCurrencyProducer.sendCurrencyAssetMessage(currencyAssetTransaction);
     }
 
-    public List<Asset> getAllCurrencyAssetTransactions(){
-        List<Asset> curr = assetsRepository.getAllCurrencyAssetTransactions();
+    public List<AssetTransaction> getAllCurrencyAssetTransactions(){
+        List<AssetTransaction> curr = assetsRepository.getAllCurrencyAssetTransactions();
         return curr;
     }
 
-    public void removeCurrencyAsset(String timestamp, String longName, String shortName){
-        assetsRepository.removeCurrencyAsset(timestamp,longName,shortName);
+    public void removeCurrencyAsset(String timestamp, String longName, String shortName, String transactionType){
+        assetsRepository.removeCurrencyAsset(timestamp,longName,shortName,transactionType);
     }
 
 

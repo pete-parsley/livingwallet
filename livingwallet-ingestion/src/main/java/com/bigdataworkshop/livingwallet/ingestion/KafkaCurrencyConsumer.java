@@ -1,6 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
-import com.bigdataworkshop.wallet.model.Asset;
+import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,9 +25,9 @@ public class KafkaCurrencyConsumer {
         logger.info(String.format("$$ -> Consumed Message -> %s", message));
      //   ObjectMapper objectMapper = new ObjectMapper();
         JsonNode currencyRateJson = objectMapper.readTree(message);
-        Asset currencyAsset = objectMapper.treeToValue(currencyRateJson,Asset.class);
-        logger.info(String.format("$$ -> Currency Rate:  -> %s,%s,%s", currencyAsset.getAssetShortName(),currencyAsset.getPricing(),currencyAsset.getPricingDate()));
-        assetsRepository.saveCurrencyRate(currencyAsset);
+        AssetTransaction currencyAssetTransaction = objectMapper.treeToValue(currencyRateJson, AssetTransaction.class);
+        logger.info(String.format("$$ -> Currency Rate:  -> %s,%s,%s", currencyAssetTransaction.getAssetShortName(), currencyAssetTransaction.getPricing(), currencyAssetTransaction.getPricingDate()));
+        assetsRepository.saveCurrencyRate(currencyAssetTransaction);
     }
 
     @KafkaListener(topics = "currency_assets", groupId = "group_id")
@@ -35,8 +35,8 @@ public class KafkaCurrencyConsumer {
         logger.info(String.format("$$ -> Consumed Message -> %s", message));
     //    ObjectMapper objectMapper = new ObjectMapper();
         JsonNode currencyAssetJson = objectMapper.readTree(message);
-        Asset currencyAsset = objectMapper.treeToValue(currencyAssetJson,Asset.class);
-        logger.info(String.format("$$ -> Currency Asset:  -> %s,%s,%s,%f,%tD", currencyAsset.getAssetShortName(),currencyAsset.getAssetLongName(), currencyAsset.getAssetDescription(),currencyAsset.getPricing(),currencyAsset.getPricingDate()));
-        assetsRepository.saveCurrencyAssetBuy(currencyAsset);
+        AssetTransaction currencyAssetTransaction = objectMapper.treeToValue(currencyAssetJson, AssetTransaction.class);
+        logger.info(String.format("$$ -> Currency Asset:  -> %s,%s,%s,%f,%tD", currencyAssetTransaction.getAssetShortName(), currencyAssetTransaction.getAssetLongName(), currencyAssetTransaction.getAssetDescription(), currencyAssetTransaction.getPricing(), currencyAssetTransaction.getPricingDate()));
+        assetsRepository.saveCurrencyTransaction(currencyAssetTransaction);
     }
 }

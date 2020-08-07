@@ -1,7 +1,7 @@
 package com.bigdataworkshop.livingwallet.web;
 
 import com.bigdataworkshop.livingwallet.ingestion.CurrencyService;
-import com.bigdataworkshop.wallet.model.Asset;
+import com.bigdataworkshop.wallet.model.AssetTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +30,54 @@ public class AssetController {
     }
 
     @GetMapping("/currency_buy")
-    public String currency(Model model) {
+    public String currencyBuy(Model model) {
         logger.info("Redirecting to currency_buy.html");
-        Asset currencyAsset = new Asset();
-        currencyAsset.setAssetClass("CURRENCY");
-        model.addAttribute("currency",currencyAsset);
+        AssetTransaction currencyAssetTransaction = new AssetTransaction();
+        currencyAssetTransaction.setAssetClass("CURRENCY");
+        currencyAssetTransaction.setTransactionType("BUY");
+        model.addAttribute("currency", currencyAssetTransaction);
         return "currency_buy";
     }
 
 
     @PostMapping("/currency_buy")
-    public String currencyForm(@ModelAttribute Asset currencyAsset) {
-        logger.info("Submitted Currency: " + currencyAsset.toString());
-      //  currencyAsset.setPricingDate(currencyAsset.getPricingDateFormatted().toInstant());
-        currencyService.saveCurrencyAsset(currencyAsset);
+    public String currencyBuyForm(@ModelAttribute AssetTransaction currencyAssetTransaction) {
+        logger.info("Submitted Currency: " + currencyAssetTransaction.toString());
+        currencyService.saveCurrencyTransaction(currencyAssetTransaction);
+        return "index";
+    }
+
+    @GetMapping("/currency_sell")
+    public String currencySell(Model model) {
+        logger.info("Redirecting to currency_sell.html");
+        AssetTransaction currencyAssetTransaction = new AssetTransaction();
+        currencyAssetTransaction.setAssetClass("CURRENCY");
+        currencyAssetTransaction.setTransactionType("SELL");
+        model.addAttribute("currency", currencyAssetTransaction);
+        return "currency_sell";
+    }
+
+
+    @PostMapping("/currency_sell")
+    public String currencySellForm(@ModelAttribute AssetTransaction currencyAssetTransaction) {
+        logger.info("Submitted Currency: " + currencyAssetTransaction.toString());
+        currencyService.saveCurrencyTransaction(currencyAssetTransaction);
         return "index";
     }
 
     @GetMapping("/currency_mod")
     public String currencyModify(Model model) {
         logger.info("Redirecting to currency_mod.html");
-        List<Asset> curr = currencyService.getAllCurrencyAssetTransactions();
+        List<AssetTransaction> curr = currencyService.getAllCurrencyAssetTransactions();
         model.addAttribute("currencies", curr);
         return "currency_mod";
     }
 
     @GetMapping("/currency_remove")
-    public String currencyRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, Model model) {
+    public String currencyRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, @RequestParam(name="transaction_type") String transactionType, Model model) {
         logger.info("Redirecting to currency_remove.html");
-        currencyService.removeCurrencyAsset(timestamp,longName,shortName);
-        List<Asset> curr = currencyService.getAllCurrencyAssetTransactions();
+        currencyService.removeCurrencyAsset(timestamp,longName,shortName,transactionType);
+        List<AssetTransaction> curr = currencyService.getAllCurrencyAssetTransactions();
         model.addAttribute("currencies", curr);
         return "currency_mod";
     }

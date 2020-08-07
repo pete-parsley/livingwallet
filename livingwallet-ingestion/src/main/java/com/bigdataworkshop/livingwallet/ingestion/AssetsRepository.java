@@ -1,6 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
-import com.bigdataworkshop.wallet.model.Asset;
+import com.bigdataworkshop.wallet.model.AssetTransaction;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.*;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -27,46 +26,48 @@ public class AssetsRepository {
         mapper = new InfluxDBMapper(influxDB);
         Pong response = influxDB.ping();
         influxDB.setDatabase("livingwallet");
-        System.out.println(response.getVersion());
+        logger.info(response.getVersion());
     }
 
-    public void saveCurrencyRate(Asset currencyAsset){
-        Point point = Point.measurement("currency_rates").time(currencyAsset.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
-                            .addField("currency",currencyAsset.getAssetShortName())
-                            .addField("rate",currencyAsset.getPricing())
+    public void saveCurrencyRate(AssetTransaction currencyAssetTransaction){
+        Point point = Point.measurement("currency_rates").time(currencyAssetTransaction.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
+                            .addField("currency", currencyAssetTransaction.getAssetShortName())
+                            .addField("rate", currencyAssetTransaction.getPricing())
                             .build();
         influxDB.write(point);
 
     }
 
-    public void saveCurrencyAssetBuy(Asset currencyAsset){
-        Point point = Point.measurement("currency_asset_transactions").time(currencyAsset.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
-                .tag("short_name", currencyAsset.getAssetShortName())
-                .tag("long_name", currencyAsset.getAssetLongName())
-                .addField("description", currencyAsset.getAssetDescription())
-                .addField("pricing", currencyAsset.getPricing())
-                .addField("number_units", currencyAsset.getNumberUnits())
-                .addField("a sset_class", currencyAsset.getAssetClass())
-                .addField("transaction_type","BUY").build();
+    public void saveCurrencyTransaction(AssetTransaction currencyAssetTransaction){
+        Point point = Point.measurement("currency_asset_transactions").time(currencyAssetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
+                .tag("short_name", currencyAssetTransaction.getAssetShortName())
+                .tag("long_name", currencyAssetTransaction.getAssetLongName())
+                .tag("transaction_type",currencyAssetTransaction.getTransactionType())
+                .addField("description", currencyAssetTransaction.getAssetDescription())
+                .addField("pricing", currencyAssetTransaction.getPricing())
+                .addField("number_units", (currencyAssetTransaction.getTransactionType().equals("BUY")) ? currencyAssetTransaction.getNumberUnits() : (-1) * currencyAssetTransaction.getNumberUnits())
+                .addField("asset_class", currencyAssetTransaction.getAssetClass())
+                .build();
         influxDB.write(point);
     }
 
-    public List<Asset> getAllCurrencyAssetTransactions(){
+    public List<AssetTransaction> getAllCurrencyAssetTransactions(){
 
 
-        Query query = new Query("select * from currency_asset_transactions");
-        List<Asset> assets = mapper.query(query,Asset.class);
-        logger.info("Number of Assets retrieved: " + assets.size());
-        return assets;
+        Query query = new Query("SELECT * FROM currency_asset_transactions");
+        List<AssetTransaction> assetTransactions = mapper.query(query, AssetTransaction.class);
+        logger.info("Number of Assets retrieved: " + assetTransactions.size());
+        return assetTransactions;
 
     }
 
-    public void removeCurrencyAsset(String timestamp, String longName, String shortName){
+    public void removeCurrencyAsset(String timestamp, String longName, String shortName, String transactionType){
 
-        Query bindQuery = new BoundParameterQuery.QueryBuilder().newQuery("DELETE FROM assets WHERE time=$time AND long_name=$long_name AND short_name=$short_name")
+        Query bindQuery = new BoundParameterQuery.QueryBuilder().newQuery("DELETE FROM currency_asset_transactions WHERE time=$time AND long_name=$long_name AND short_name=$short_name AND transaction_type=$transaction_type")
                                                             .bind("time",timestamp)
                                                             .bind("long_name",longName)
                                                             .bind("short_name", shortName)
+                                                            .bind("transaction_type", transactionType)
                                                             .create();
 
         logger.info(bindQuery.getCommand());

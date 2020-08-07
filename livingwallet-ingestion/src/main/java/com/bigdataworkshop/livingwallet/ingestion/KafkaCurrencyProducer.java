@@ -1,6 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
-import com.bigdataworkshop.wallet.model.Asset;
+import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -24,16 +24,16 @@ public class KafkaCurrencyProducer {
 
     ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
 
-    public void sendCurrencyRateMessage(Asset currencyAsset) {
+    public void sendCurrencyRateMessage(AssetTransaction currencyAssetTransaction) {
 
-        JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAsset);
+        JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAssetTransaction);
         logger.info(String.format("$$ -> Produced Message -> %s", currencyAssetJson.toString()));
         kafkaTemplate.send(CURRENCY_RATES,currencyAssetJson.toString());
     }
 
-    public void sendCurrencyAssetMessage(Asset currencyAsset) {
+    public void sendCurrencyAssetMessage(AssetTransaction currencyAssetTransaction) {
 
-        JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAsset);
+        JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAssetTransaction);
         logger.info(String.format("$$ -> Produced Message -> %s", currencyAssetJson.toString()));
         kafkaTemplate.send(CURRENCY_ASSETS,currencyAssetJson.toString());
     }

@@ -41,8 +41,12 @@
            <td> <input type="text" th:field="*{numberUnits}" id="numberUnits" placeholder="numberUnits"></td>
        </tr>
        <tr>
-           <td><label for="assetClass">Number of Units</label></td>
-           <td> <input type="text" th:field="*{assetClass}" id="assetClass" placeholder="numberUnits" readonly></td>
+           <td><label for="assetClass">Asset Class</label></td>
+           <td> <input type="text" th:field="*{assetClass}" id="assetClass" placeholder="assetClass" readonly></td>
+       </tr>
+       <tr>
+           <td><label for="transactionType">Transaction Type</label></td>
+           <td> <input type="text" th:field="*{transactionType}" id="transactionType" placeholder="transactionType" readonly></td>
        </tr>
         <!--<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
        <tr><td><input type="submit" value="Add Currency Asset"></td><td></td></tr>
