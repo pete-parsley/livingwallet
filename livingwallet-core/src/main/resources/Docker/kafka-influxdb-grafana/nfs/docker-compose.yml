@@ -1,0 +1,22 @@
+version: '3.7'
+
+
+services:
+  influxdb:
+    image: 'influxdb:latest'
+    ports:
+      - '8086:8086'
+    volumes:
+      - 'nfsmount:/var/lib/influxdb'
+    environment:
+      - 'INFLUXDB_DB=livingwallet'
+      - 'INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}'
+      - 'INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}'
+
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+        type: nfsmount
+        o: "addr=192.168.1.15,rw,hard,nolock"
+        device: ":Docker/var/lib/influxdb"
