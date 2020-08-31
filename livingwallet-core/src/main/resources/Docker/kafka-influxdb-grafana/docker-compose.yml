@@ -9,13 +9,13 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_CREATE_TOPICS: 'currency_rates:1:1'
+      KAFKA_CREATE_TOPICS: 'currency_rates:1:1;currency_assets:1:1'
   influxdb:
     image: 'influxdb:latest'
     ports:
-      - '8086:8086'
+      - '8087:8086'
     volumes:
-      - 'influxdb-storage:/var/lib/influxdb'
+      - 'influxdb_nfs:/var/lib/influxdb'
     environment:
       - 'INFLUXDB_DB=livingwallet'
       - 'INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}'
@@ -25,7 +25,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - 'grafana-storage:/var/lib/grafana'
+      - 'grafana_nfs:/var/lib/grafana'
       - './grafana-provisioning/:/etc/grafana/provisioning'
     depends_on:
       - influxdb
@@ -33,5 +33,7 @@ services:
       - 'GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}'
       - 'GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}'
 volumes:
-  influxdb-storage:
-  grafana-storage:
+  influxdb_nfs:
+    external: true
+  grafana_nfs:
+    external: true
