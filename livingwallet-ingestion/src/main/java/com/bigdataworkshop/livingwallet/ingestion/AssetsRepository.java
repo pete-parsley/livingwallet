@@ -22,7 +22,7 @@ public class AssetsRepository {
     private final Logger logger = LoggerFactory.getLogger(AssetsRepository.class);
 
     public AssetsRepository() {
-        influxDB = InfluxDBFactory.connect("http://localhost:8086");
+        influxDB = InfluxDBFactory.connect("http://localhost:8087");
         mapper = new InfluxDBMapper(influxDB);
         Pong response = influxDB.ping();
         influxDB.setDatabase("livingwallet");
@@ -31,7 +31,7 @@ public class AssetsRepository {
 
     public void saveCurrencyRate(AssetTransaction currencyAssetTransaction){
         Point point = Point.measurement("currency_rates").time(currencyAssetTransaction.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
-                            .addField("currency", currencyAssetTransaction.getAssetShortName())
+                            .tag("currency", currencyAssetTransaction.getAssetShortName())
                             .addField("rate", currencyAssetTransaction.getPricing())
                             .build();
         influxDB.write(point);
