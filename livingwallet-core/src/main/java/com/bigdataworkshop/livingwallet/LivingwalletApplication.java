@@ -1,10 +1,9 @@
 package com.bigdataworkshop.livingwallet;
 
-import com.bigdataworkshop.livingwallet.ingestion.CurrencyService;
+import com.bigdataworkshop.livingwallet.ingestion.AssetService;
 import com.bigdataworkshop.wallet.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,7 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 @EnableScheduling
 public class LivingwalletApplication  {
 	@Autowired
-	private CurrencyService cs;
+	private AssetService cs;
 
 	@Bean
 	public Java8TimeDialect java8TimeDialect() {

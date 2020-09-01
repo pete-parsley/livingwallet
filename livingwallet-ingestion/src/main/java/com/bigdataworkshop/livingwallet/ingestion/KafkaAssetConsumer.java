@@ -13,9 +13,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KafkaCurrencyConsumer {
+public class KafkaAssetConsumer {
 
-    private final Logger logger = LoggerFactory.getLogger(KafkaCurrencyConsumer.class);
+    private final Logger logger = LoggerFactory.getLogger(KafkaAssetConsumer.class);
     @Autowired
     AssetsRepository assetsRepository;
     ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
@@ -37,6 +37,6 @@ public class KafkaCurrencyConsumer {
         JsonNode currencyAssetJson = objectMapper.readTree(message);
         AssetTransaction currencyAssetTransaction = objectMapper.treeToValue(currencyAssetJson, AssetTransaction.class);
         logger.info(String.format("$$ -> Currency Asset:  -> %s,%s,%s,%f,%tD", currencyAssetTransaction.getAssetShortName(), currencyAssetTransaction.getAssetLongName(), currencyAssetTransaction.getAssetDescription(), currencyAssetTransaction.getPricing(), currencyAssetTransaction.getPricingDate()));
-        assetsRepository.saveCurrencyTransaction(currencyAssetTransaction);
+        assetsRepository.saveAssetTransaction(currencyAssetTransaction);
     }
 }

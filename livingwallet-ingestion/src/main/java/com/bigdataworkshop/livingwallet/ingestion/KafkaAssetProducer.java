@@ -12,7 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KafkaCurrencyProducer {
+public class KafkaAssetProducer {
 
     private static final String CURRENCY_RATES = "currency_rates";
     private static final String CURRENCY_ASSETS = "currency_assets";
@@ -20,7 +20,7 @@ public class KafkaCurrencyProducer {
     @Autowired
     private KafkaTemplate<String,String> kafkaTemplate;
 
-    private final Logger logger = LoggerFactory.getLogger(KafkaCurrencyProducer.class);
+    private final Logger logger = LoggerFactory.getLogger(KafkaAssetProducer.class);
 
     ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
 

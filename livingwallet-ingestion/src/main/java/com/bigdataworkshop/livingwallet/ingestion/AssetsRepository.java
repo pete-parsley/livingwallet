@@ -29,7 +29,7 @@ public class AssetsRepository {
         logger.info(response.getVersion());
     }
 
-    public void saveCurrencyRate(AssetTransaction currencyAssetTransaction){
+    public void saveAssetRate(AssetTransaction currencyAssetTransaction){
         Point point = Point.measurement("currency_rates").time(currencyAssetTransaction.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
                             .tag("currency", currencyAssetTransaction.getAssetShortName())
                             .addField("rate", currencyAssetTransaction.getPricing())
@@ -38,8 +38,13 @@ public class AssetsRepository {
 
     }
 
-    public void saveCurrencyTransaction(AssetTransaction currencyAssetTransaction){
-        Point point = Point.measurement("currency_asset_transactions").time(currencyAssetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
+
+
+    public void saveAssetTransaction(AssetTransaction currencyAssetTransaction){
+
+        String assetClass ="";
+
+        Point point = Point.measurement(assetClass).time(currencyAssetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
                 .tag("short_name", currencyAssetTransaction.getAssetShortName())
                 .tag("long_name", currencyAssetTransaction.getAssetLongName())
                 .tag("transaction_type",currencyAssetTransaction.getTransactionType())
@@ -51,6 +56,7 @@ public class AssetsRepository {
         influxDB.write(point);
     }
 
+
     public List<AssetTransaction> getAllCurrencyAssetTransactions(){
 
 
@@ -61,7 +67,9 @@ public class AssetsRepository {
 
     }
 
-    public void removeCurrencyAsset(String timestamp, String longName, String shortName, String transactionType){
+
+
+    public void removeAssetTransaction(String timestamp, String longName, String shortName, String transactionType){
 
         Query bindQuery = new BoundParameterQuery.QueryBuilder().newQuery("DELETE FROM currency_asset_transactions WHERE time=$time AND long_name=$long_name AND short_name=$short_name AND transaction_type=$transaction_type")
                                                             .bind("time",timestamp)

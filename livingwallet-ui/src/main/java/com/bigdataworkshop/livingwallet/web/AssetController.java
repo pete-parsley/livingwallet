@@ -1,6 +1,6 @@
 package com.bigdataworkshop.livingwallet.web;
 
-import com.bigdataworkshop.livingwallet.ingestion.CurrencyService;
+import com.bigdataworkshop.livingwallet.ingestion.AssetService;
 import com.bigdataworkshop.wallet.model.AssetTransaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import java.util.List;
 public class AssetController {
 
     @Autowired
-    CurrencyService currencyService;
+    AssetService assetService;
 
     private final Logger logger = LoggerFactory.getLogger(AssetController.class);
 
@@ -43,7 +43,7 @@ public class AssetController {
     @PostMapping("/currency_buy")
     public String currencyBuyForm(@ModelAttribute AssetTransaction currencyAssetTransaction) {
         logger.info("Submitted Currency: " + currencyAssetTransaction.toString());
-        currencyService.saveCurrencyTransaction(currencyAssetTransaction);
+        assetService.saveCurrencyTransaction(currencyAssetTransaction);
         return "index";
     }
 
@@ -61,14 +61,14 @@ public class AssetController {
     @PostMapping("/currency_sell")
     public String currencySellForm(@ModelAttribute AssetTransaction currencyAssetTransaction) {
         logger.info("Submitted Currency: " + currencyAssetTransaction.toString());
-        currencyService.saveCurrencyTransaction(currencyAssetTransaction);
+        assetService.saveCurrencyTransaction(currencyAssetTransaction);
         return "index";
     }
 
     @GetMapping("/currency_mod")
     public String currencyModify(Model model) {
         logger.info("Redirecting to currency_mod.html");
-        List<AssetTransaction> curr = currencyService.getAllCurrencyAssetTransactions();
+        List<AssetTransaction> curr = assetService.getAllCurrencyAssetTransactions();
         model.addAttribute("currencies", curr);
         return "currency_mod";
     }
@@ -76,8 +76,8 @@ public class AssetController {
     @GetMapping("/currency_remove")
     public String currencyRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, @RequestParam(name="transaction_type") String transactionType, Model model) {
         logger.info("Redirecting to currency_remove.html");
-        currencyService.removeCurrencyAsset(timestamp,longName,shortName,transactionType);
-        List<AssetTransaction> curr = currencyService.getAllCurrencyAssetTransactions();
+        assetService.removeCurrencyAsset(timestamp,longName,shortName,transactionType);
+        List<AssetTransaction> curr = assetService.getAllCurrencyAssetTransactions();
         model.addAttribute("currencies", curr);
         return "currency_mod";
     }

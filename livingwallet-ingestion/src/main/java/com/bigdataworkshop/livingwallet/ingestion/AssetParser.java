@@ -10,7 +10,7 @@ import javax.imageio.IIOException;
 import java.io.IOException;
 
 @Component
-public class CurrencyParser implements WebParser{
+public class AssetParser implements WebParser{
 
     private static final String currencyBaseUrl= "http://stooq.pl";
 
