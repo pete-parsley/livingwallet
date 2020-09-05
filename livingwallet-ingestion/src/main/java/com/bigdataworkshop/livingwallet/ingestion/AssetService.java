@@ -1,8 +1,8 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
+import com.bigdataworkshop.wallet.model.AssetClass;
 import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.bigdataworkshop.wallet.model.Currency;
-import com.bigdataworkshop.wallet.model.Metals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,50 +46,52 @@ public class AssetService {
     public void getRates(){
         if(!activeProfile.equals("dev")) {
             logger.info("Checking currency rates");
-            List<String> requiredCurrencies = getRequiredAssetRates("CURRENCY");
+            List<String> requiredCurrencies = getRequiredAssetRates(AssetClass.CURRENCY);
             for (String currency : requiredCurrencies) {
                 logger.info("Getting rate for: " + currency);
-                saveAssetRate(Currency.valueOf(currency));
+                saveCurrencyAssetRate(Currency.valueOf(currency));
             }
         }
     }
 
-    private List<String> getRequiredAssetRates(String assetClass){
-        List<String> requiredCurrencies = new ArrayList<>();
-        List<AssetTransaction> assetTransactions = assetsRepository.getAllCurrencyAssetTransactions();
+    private List<String> getRequiredAssetRates(AssetClass assetClass){
+        List<String> requiredAsset = new ArrayList<>();
+
+        List<AssetTransaction> assetTransactions = assetsRepository.getAllAssetTransactions(assetClass);
 
         for(AssetTransaction assetTransaction : assetTransactions){
-            if(!requiredCurrencies.contains(assetTransaction.getAssetShortName()))
-                requiredCurrencies.add(assetTransaction.getAssetShortName());
+            if(!requiredAsset.contains(assetTransaction.getAssetShortName()))
+                requiredAsset.add(assetTransaction.getAssetShortName());
         }
 
-        return requiredCurrencies;
+        return requiredAsset;
     }
 
 
 
-    public String saveAssetRate(Currency currency) {
-        String rate = assetParser.getRate(currency);
+
+    public String saveCurrencyAssetRate(Currency currency) {
+        String rate = assetParser.getCurrencyRate(currency);
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Instant dateobj = Instant.now();
         AssetTransaction currencyAssetTransaction = new AssetTransaction(Float.parseFloat(rate), dateobj, currency.toString(),"kurs wymiany walut","notowania",1.0f,"CURRENCY", LocalDate.now(),"");
-        kafkaCurrencyProducer.sendCurrencyRateMessage(currencyAssetTransaction);
+        kafkaCurrencyProducer.sendAssetRateMessage(currencyAssetTransaction);
         return rate;
     }
 
 
-    public void saveAssetTransaction(AssetTransaction currencyAssetTransaction) {
-        kafkaCurrencyProducer.sendCurrencyAssetMessage(currencyAssetTransaction);
+    public void saveAssetTransaction(AssetTransaction assetTransaction) {
+        kafkaCurrencyProducer.sendAssetTransactionMessage(assetTransaction);
     }
 
-    public List<AssetTransaction> getAllAssetTransactions(String assetClass){
-        List<AssetTransaction> curr = assetsRepository.getAllCurrencyAssetTransactions();
-        return curr;
+    public List<AssetTransaction> getAllAssetTransactions(AssetClass assetClass){
+        List<AssetTransaction> assets = assetsRepository.getAllAssetTransactions(assetClass);
+        return assets;
     }
 
 
-    public void removeAsset(String timestamp, String longName, String shortName, String transactionType){
-        assetsRepository.removeAssetTransaction(timestamp,longName,shortName,transactionType);
+    public void removeAsset(String timestamp, String longName, String shortName, String transactionType, AssetClass assetClass){
+        assetsRepository.removeAssetTransaction(timestamp,longName,shortName,transactionType, assetClass);
     }
 
 

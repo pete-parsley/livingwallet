@@ -1,6 +1,8 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
+import com.bigdataworkshop.wallet.model.AssetClass;
 import com.bigdataworkshop.wallet.model.AssetTransaction;
+import com.bigdataworkshop.wallet.model.TransactionType;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.*;
@@ -29,7 +31,7 @@ public class AssetsRepository {
         logger.info(response.getVersion());
     }
 
-    public void saveAssetRate(AssetTransaction currencyAssetTransaction){
+    public void saveAssetRate(AssetTransaction currencyAssetTransaction, AssetClass assetClass){
         Point point = Point.measurement("currency_rates").time(currencyAssetTransaction.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
                             .tag("currency", currencyAssetTransaction.getAssetShortName())
                             .addField("rate", currencyAssetTransaction.getPricing())
@@ -40,11 +42,25 @@ public class AssetsRepository {
 
 
 
-    public void saveAssetTransaction(AssetTransaction currencyAssetTransaction){
+    public void saveAssetTransaction(AssetTransaction currencyAssetTransaction, AssetClass assetClass){
 
-        String assetClass ="";
+        String measurementName;
 
-        Point point = Point.measurement(assetClass).time(currencyAssetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
+        switch(assetClass) {
+            case CURRENCY:
+                measurementName = "asset_transactions";
+                break;
+            case METAL:
+                measurementName = "asset_transactions";
+                break;
+            default:
+                measurementName = "";
+                break;
+        }
+
+
+
+        Point point = Point.measurement(measurementName).time(currencyAssetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
                 .tag("short_name", currencyAssetTransaction.getAssetShortName())
                 .tag("long_name", currencyAssetTransaction.getAssetLongName())
                 .tag("transaction_type",currencyAssetTransaction.getTransactionType())
@@ -57,10 +73,21 @@ public class AssetsRepository {
     }
 
 
-    public List<AssetTransaction> getAllCurrencyAssetTransactions(){
+    public List<AssetTransaction> getAllAssetTransactions(AssetClass assetClass){
 
+        Query query;
+        switch(assetClass) {
+            case CURRENCY:
+                query = new Query("SELECT * FROM asset_transactions WHERE asset_class='CURRENCY'");
+                break;
+            case METAL:
+                query = new Query("SELECT * FROM asset_transactions WHERE asset_class='METAL'");
+                break;
+            default:
+                query = null;
+                break;
+        }
 
-        Query query = new Query("SELECT * FROM currency_asset_transactions");
         List<AssetTransaction> assetTransactions = mapper.query(query, AssetTransaction.class);
         logger.info("Number of Assets retrieved: " + assetTransactions.size());
         return assetTransactions;
@@ -69,9 +96,23 @@ public class AssetsRepository {
 
 
 
-    public void removeAssetTransaction(String timestamp, String longName, String shortName, String transactionType){
+    public void removeAssetTransaction(String timestamp, String longName, String shortName, String transactionType, AssetClass assetClass){
 
-        Query bindQuery = new BoundParameterQuery.QueryBuilder().newQuery("DELETE FROM currency_asset_transactions WHERE time=$time AND long_name=$long_name AND short_name=$short_name AND transaction_type=$transaction_type")
+        String measurementName;
+
+        switch(assetClass) {
+            case CURRENCY:
+                measurementName = "asset_transactions";
+                break;
+            case METAL:
+                measurementName = "asset_transactions";
+                break;
+            default:
+                measurementName = "";
+                break;
+        }
+
+        Query bindQuery = new BoundParameterQuery.QueryBuilder().newQuery("DELETE FROM " + measurementName + " WHERE time=$time AND long_name=$long_name AND short_name=$short_name AND transaction_type=$transaction_type")
                                                             .bind("time",timestamp)
                                                             .bind("long_name",longName)
                                                             .bind("short_name", shortName)

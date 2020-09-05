@@ -3,11 +3,11 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Currency Sell Page</title>
+    <title>Metals Sell Page</title>
 </head>
 <body>
-<p>Sell Currency Asset:</p>
-<form action="#" th:action="@{/currency_sell}" th:object="${currency}" method="post">
+<p>Metals Asset:</p>
+<form action="#" th:action="@{/metal_sell}" th:object="${metal}" method="post">
    <table cellpadding="5">
        <tr>
            <td><label for="assetLongName">Long Name</label></td>
@@ -18,13 +18,11 @@
            <td><input type="text" th:field="*{assetDescription}" id="assetDescription" placeholder="assetDescription"></td>
        </tr>
        <tr>
-           <td><label for="assetShortName">Currency in Wallet</label></td>
+           <td><label for="assetShortName">Metals in Wallet</label></td>
            <td>
                <select th:field="*{assetShortName}" id="assetShortName" placeholder="assetShortName">
-                   <option th:value="'USD'" th:text="'USD'"></option>
-                   <option th:value="'CHF'" th:text="'CHF'"></option>
-                   <option th:value="'EUR'" th:text="'EUR'"></option>
-                   <option th:value="'PLN'" th:text="'PLN'"></option>
+                   <option th:value="'GOLD'" th:text="'GOLD'"></option>
+                   <option th:value="'SILVER'" th:text="'SILVER'"></option>
                </select>
        </tr>
        <!--<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>-->

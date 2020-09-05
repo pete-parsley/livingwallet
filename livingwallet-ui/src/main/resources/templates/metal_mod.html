@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<p>List of available metals Assets:</p>
+<table border="1px">
+    <tr>
+        <th>Pricing Date</th>
+        <th>Short Name</th>
+        <th>Long Name</th>
+        <th>Description</th>
+        <th>Number Units</th>
+        <th>Pricing</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="metal : ${metals}">
+        <td th:text="${metal.pricingDate}"></td>
+        <td th:text="${metal.assetShortName}"></td>
+        <td th:text="${metal.assetLongName}"></td>
+        <td th:text="${metal.assetDescription}"></td>
+        <td th:text="${metal.numberUnits}"></td>
+        <td th:text="${metal.pricing}"></td>
+        <td th:text="${metal.transactionType}"></td>
+        <td><a th:href="@{/metals_remove(timestamp=${metal.pricingDate},long_name=${metal.assetLongName},short_name=${metal.assetShortName},transaction_type=${metal.transactionType})}">REMOVE</a></td>
+    </tr>
+</table>
+<br>
+<a href="/home"><-HOME PAGE</a>
+</body>
+</html>

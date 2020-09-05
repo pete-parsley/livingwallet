@@ -35,9 +35,9 @@ public class LivingwalletApplication  {
 		System.out.println("Hello World");
 
 		while(true) {
-			cs.saveCurrencyRate(Currency.CHF);
-			cs.saveCurrencyRate(Currency.USD);
-			cs.saveCurrencyRate(Currency.EUR);
+			cs.saveCurrencyAssetRate(Currency.CHF);
+			cs.saveCurrencyAssetRate(Currency.USD);
+			cs.saveCurrencyAssetRate(Currency.EUR);
 			Thread.sleep(5000);
 		}
 

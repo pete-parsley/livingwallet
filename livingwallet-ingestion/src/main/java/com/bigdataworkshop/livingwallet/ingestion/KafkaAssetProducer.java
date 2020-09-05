@@ -1,5 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
+import com.bigdataworkshop.wallet.model.AssetClass;
 import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,8 @@ public class KafkaAssetProducer {
 
     private static final String CURRENCY_RATES = "currency_rates";
     private static final String CURRENCY_ASSETS = "currency_assets";
+    private static final String METALS_RATES = "metals_rates";
+    private static final String METALS_ASSETS = "metals_assets";
 
     @Autowired
     private KafkaTemplate<String,String> kafkaTemplate;
@@ -24,18 +27,38 @@ public class KafkaAssetProducer {
 
     ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
 
-    public void sendCurrencyRateMessage(AssetTransaction currencyAssetTransaction) {
+    public void sendAssetRateMessage(AssetTransaction assetTransaction) {
 
-        JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAssetTransaction);
-        logger.info(String.format("$$ -> Produced Message -> %s", currencyAssetJson.toString()));
-        kafkaTemplate.send(CURRENCY_RATES,currencyAssetJson.toString());
+        JsonNode assetJson = objectMapper.valueToTree(assetTransaction);
+        logger.info(String.format("$$ -> Produced Message -> %s", assetJson.toString()));
+        switch (assetTransaction.getAssetClass()) {
+            case "CURRENCY":
+                kafkaTemplate.send(CURRENCY_RATES, assetJson.toString());
+                break;
+            case "METAL":
+                kafkaTemplate.send(METALS_RATES, assetJson.toString());
+            default:
+                break;
+        }
     }
 
-    public void sendCurrencyAssetMessage(AssetTransaction currencyAssetTransaction) {
+    public void sendAssetTransactionMessage(AssetTransaction assetTransaction) {
 
-        JsonNode currencyAssetJson = objectMapper.valueToTree(currencyAssetTransaction);
-        logger.info(String.format("$$ -> Produced Message -> %s", currencyAssetJson.toString()));
-        kafkaTemplate.send(CURRENCY_ASSETS,currencyAssetJson.toString());
+        JsonNode assetJson = objectMapper.valueToTree(assetTransaction);
+        logger.info(String.format("$$ -> Produced Message -> %s", assetJson.toString()));
+
+        switch(assetTransaction.getAssetClass()){
+
+            case "CURRENCY":
+                kafkaTemplate.send(CURRENCY_ASSETS,assetJson.toString());
+                break;
+            case "METAL":
+                kafkaTemplate.send(METALS_ASSETS,assetJson.toString());
+                break;
+            default:
+                break;
+        }
+
     }
 
 

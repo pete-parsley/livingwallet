@@ -6,8 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Objects;
 
-@Measurement(name="currency_asset_transactions", database="livingwallet")
+@Measurement(name="asset_transactions", database="livingwallet")
 public class AssetTransaction {
 
     @Column(name="pricing")
@@ -116,4 +117,5 @@ public class AssetTransaction {
     public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
+
 }
