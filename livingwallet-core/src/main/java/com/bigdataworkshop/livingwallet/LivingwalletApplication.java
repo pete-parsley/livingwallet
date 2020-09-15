@@ -1,9 +1,7 @@
 package com.bigdataworkshop.livingwallet;
 
 import com.bigdataworkshop.livingwallet.ingestion.AssetService;
-import com.bigdataworkshop.wallet.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -29,18 +27,4 @@ public class LivingwalletApplication  {
 
 	}
 
-
-	public void run(ApplicationArguments args) throws Exception {
-
-		System.out.println("Hello World");
-
-		while(true) {
-			cs.saveCurrencyAssetRate(Currency.CHF);
-			cs.saveCurrencyAssetRate(Currency.USD);
-			cs.saveCurrencyAssetRate(Currency.EUR);
-			Thread.sleep(5000);
-		}
-
-
-	}
 }

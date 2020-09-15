@@ -1,8 +1,6 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
-import com.bigdataworkshop.wallet.model.AssetClass;
-import com.bigdataworkshop.wallet.model.AssetTransaction;
-import com.bigdataworkshop.wallet.model.Currency;
+import com.bigdataworkshop.wallet.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,36 +44,55 @@ public class AssetService {
     public void getRates(){
         if(!activeProfile.equals("dev")) {
             logger.info("Checking currency rates");
-            List<String> requiredCurrencies = getRequiredAssetRates(AssetClass.CURRENCY);
-            for (String currency : requiredCurrencies) {
-                logger.info("Getting rate for: " + currency);
-                saveCurrencyAssetRate(Currency.valueOf(currency));
+            List<AssetTransaction> requiredAssets = getRequiredAssetRates();
+            for (AssetTransaction requiredAsset : requiredAssets) {
+                logger.info("Getting rate for: " + requiredAsset.getAssetShortName());
+                saveAssetRate(requiredAsset);
             }
         }
     }
 
-    private List<String> getRequiredAssetRates(AssetClass assetClass){
-        List<String> requiredAsset = new ArrayList<>();
+    private List<AssetTransaction> getRequiredAssetRates(){
+        List<AssetTransaction> requiredAssets = new ArrayList<>();
 
-        List<AssetTransaction> assetTransactions = assetsRepository.getAllAssetTransactions(assetClass);
+        List<AssetTransaction> assetTransactions = assetsRepository.getAllAssetTransactions();
 
         for(AssetTransaction assetTransaction : assetTransactions){
-            if(!requiredAsset.contains(assetTransaction.getAssetShortName()))
-                requiredAsset.add(assetTransaction.getAssetShortName());
+            if(!requiredAssets.contains(assetTransaction))
+                requiredAssets.add(assetTransaction);
         }
 
-        return requiredAsset;
+        return requiredAssets;
     }
 
 
 
 
-    public String saveCurrencyAssetRate(Currency currency) {
-        String rate = assetParser.getCurrencyRate(currency);
+    public String saveAssetRate(AssetTransaction asset) {
+
+        String rate = "0.0";
+
+        switch(asset.getAssetClass()) {
+
+            case "CURRENCY":
+                rate = assetParser.getCurrencyRate(Currency.valueOf(asset.getAssetShortName()));
+                break;
+            case "METAL":
+                rate = assetParser.getMetalRate(Metals.valueOf(asset.getAssetShortName()));
+                break;
+            default:
+                break;
+
+        }
+
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Instant dateobj = Instant.now();
-        AssetTransaction currencyAssetTransaction = new AssetTransaction(Float.parseFloat(rate), dateobj, currency.toString(),"kurs wymiany walut","notowania",1.0f,"CURRENCY", LocalDate.now(),"");
-        kafkaCurrencyProducer.sendAssetRateMessage(currencyAssetTransaction);
+
+        AssetRate assetRate = new AssetRate(dateobj,asset.getAssetClass(),asset.getAssetShortName(),Double.parseDouble(rate));
+        //AssetTransaction currencyAssetTransaction = new AssetTransaction(Float.parseFloat(rate), dateobj, currency.toString(),"kurs wymiany walut","notowania",1.0f,"CURRENCY", LocalDate.now(),"");
+        kafkaCurrencyProducer.sendAssetRateMessage(assetRate);
+
+
         return rate;
     }
 
@@ -84,8 +101,8 @@ public class AssetService {
         kafkaCurrencyProducer.sendAssetTransactionMessage(assetTransaction);
     }
 
-    public List<AssetTransaction> getAllAssetTransactions(AssetClass assetClass){
-        List<AssetTransaction> assets = assetsRepository.getAllAssetTransactions(assetClass);
+    public List<AssetTransaction> getAllAssetTransactions(){
+        List<AssetTransaction> assets = assetsRepository.getAllAssetTransactions();
         return assets;
     }
 

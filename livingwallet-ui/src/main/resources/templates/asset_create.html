@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Buy Page</title>
+</head>
+<body>
+<p>Buy Asset:</p>
+<form onsubmit="verifyAsset()" action="#" th:action="@{/asset_create}" th:object="${asset}" method="post">
+   <table cellpadding="5">
+       <tr>
+           <td>Asset in Wallet</td>
+           <td><input onclick="javascript:assetCheck();" type="radio" id="currency" name="assetClass" th:field="*{assetClass}" th:value="CURRENCY">
+               <label  for="currency">Currency</label>
+               <input onclick="javascript:assetCheck();" type="radio" id="metal" name="assetClass" th:field="*{assetClass}" th:value="METAL" >
+               <label  for="metal">Metals</label>
+           </td>
+       </tr>
+       <tr>
+           <td>Asset Short Name</td>
+           <td><div id="currencyDiv">
+               <select th:field="*{assetShortName}" id="assetShortName1" placeholder="assetShortName">
+                   <option th:value="'USD'" th:text="'USD'"></option>
+                   <option th:value="'CHF'" th:text="'CHF'"></option>
+                   <option th:value="'EUR'" th:text="'EUR'"></option>
+                   <option th:value="'PLN'" th:text="'PLN'"></option>
+               </select>
+           </div>
+            <div id="metalDiv" style="visibility:hidden">
+                <select th:field="*{assetShortName}" id="assetShortName2" placeholder="assetShortName">
+                    <option th:value="'SILVER'" th:text="'SILVER'"></option>
+                    <option th:value="'GOLD'" th:text="'GOLD'"></option>
+                </select>
+            </div>
+           </td>
+       </tr>
+       <tr>
+           <td><label for="assetLongName">Long Name</label></td>
+           <td><input type="text" th:field="*{assetLongName}" id="assetLongName" placeholder="assetLongName"></td>
+       </tr>
+       <tr>
+           <td><label for="assetDescription">Description</label></td>
+           <td><input type="text" th:field="*{assetDescription}" id="assetDescription" placeholder="assetDescription"></td>
+       </tr>
+       <tr>
+           <td><label for="pricing">Pricing</label></td>
+           <td> <input type="text" th:field="*{pricing}" id="pricing" placeholder="pricing"></td>
+       </tr>
+       <tr>
+           <td><label for="pricingDateFormatted">Pricing Date</label></td>
+           <td> <input type="date"  th:field="*{pricingDateFormatted}" id="pricingDateFormatted" placeholder="pricingDateFormatted"></td>
+       </tr>
+       <tr>
+           <td><label for="numberUnits">Number of Units</label></td>
+           <td> <input type="text" th:field="*{numberUnits}" id="numberUnits" placeholder="numberUnits"></td>
+       </tr>
+       <tr>
+           <td>Transaction Type</td>
+           <td><input onclick="javascript:assetCheck();" type="radio" id="buy" name="transactionType" th:field="*{transactionType}" th:value="BUY">
+               <label  for="buy">Buy</label>
+               <input onclick="javascript:assetCheck();" type="radio" id="sell" name="transactionType" th:field="*{transactionType}" th:value="SELL" >
+               <label  for="sell">Sell</label></td>
+       </tr>
+       <tr><td><input type="submit" value="Add Currency Asset"></td><td></td></tr>
+   </table>
+</form>
+<br>
+<a href="/home">&lt;=HOME PAGE</a>
+
+<script type="text/javascript">
+
+
+function assetCheck() {
+    if (document.getElementById('currency').checked) {
+        document.getElementById('assetShortName2').value = null;
+        document.getElementById('currencyDiv').style.visibility = 'visible';
+		document.getElementById('metalDiv').style.visibility = 'hidden';
+    }
+    else {
+        document.getElementById('assetShortName1').value = null;
+		document.getElementById('metalDiv').style.visibility = 'visible';
+		document.getElementById('currencyDiv').style.visibility = 'hidden';
+	}
+
+}
+
+function verifyAsset() {
+    if (document.getElementById('currency').checked) {
+        document.getElementById('assetShortName2').value = null;
+    }
+    else {
+        document.getElementById('assetShortName1').value = null;
+    }
+}
+</script>
+</body>
+</html>

@@ -31,110 +31,42 @@ public class AssetController {
         return "index";
     }
 
-    @GetMapping("/currency_buy")
+    @GetMapping("/asset_create")
     public String currencyBuy(Model model) {
-        logger.info("Redirecting to currency_buy.html");
-        AssetTransaction currencyAssetTransaction = new AssetTransaction();
-        currencyAssetTransaction.setAssetClass(AssetClass.CURRENCY.toString());
-        currencyAssetTransaction.setTransactionType(TransactionType.BUY.toString());
-        model.addAttribute("currency", currencyAssetTransaction);
-        return "currency_buy";
-    }
-
-
-    @PostMapping("/currency_buy")
-    public String currencyBuyForm(@ModelAttribute AssetTransaction currencyAssetTransaction) {
-        logger.info("Submitted Currency: " + currencyAssetTransaction.toString());
-        assetService.saveAssetTransaction(currencyAssetTransaction);
-        return "index";
-    }
-
-    @GetMapping("/currency_sell")
-    public String currencySell(Model model) {
-        logger.info("Redirecting to currency_sell.html");
-        AssetTransaction currencyAssetTransaction = new AssetTransaction();
-        currencyAssetTransaction.setAssetClass(AssetClass.CURRENCY.toString());
-        currencyAssetTransaction.setTransactionType(TransactionType.SELL.toString());
-        model.addAttribute("currency", currencyAssetTransaction);
-        return "currency_sell";
-    }
-
-
-    @PostMapping("/currency_sell")
-    public String currencySellForm(@ModelAttribute AssetTransaction currencyAssetTransaction) {
-        logger.info("Submitted Currency: " + currencyAssetTransaction.toString());
-        assetService.saveAssetTransaction(currencyAssetTransaction);
-        return "index";
-    }
-
-    @GetMapping("/currency_mod")
-    public String currencyModify(Model model) {
-        logger.info("Redirecting to currency_mod.html");
-        List<AssetTransaction> curr = assetService.getAllAssetTransactions(AssetClass.CURRENCY);
-        model.addAttribute("currencies", curr);
-        return "currency_mod";
-    }
-
-    @GetMapping("/currency_remove")
-    public String currencyRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, @RequestParam(name="transaction_type") String transactionType, Model model) {
-        logger.info("Redirecting to currency_remove.html");
-        assetService.removeAsset(timestamp,longName,shortName,transactionType,AssetClass.CURRENCY);
-        List<AssetTransaction> curr = assetService.getAllAssetTransactions(AssetClass.CURRENCY);
-        model.addAttribute("currencies", curr);
-        return "currency_mod";
-    }
-
-    @GetMapping("/metal_buy")
-    public String metalBuy(Model model) {
-        logger.info("Redirecting to metal_buy.html");
+        logger.info("Redirecting to asset_create.html");
         AssetTransaction assetTransaction = new AssetTransaction();
-        assetTransaction.setAssetClass(AssetClass.METAL.toString());
-        assetTransaction.setTransactionType(TransactionType.BUY.toString());
-        model.addAttribute("metal", assetTransaction);
-        return "metal_buy";
+        assetTransaction.setAssetClass("CURRENCY");
+        assetTransaction.setTransactionType("BUY");
+        model.addAttribute("asset", assetTransaction);
+        return "asset_create";
     }
 
 
-    @PostMapping("/metal_buy")
-    public String metalBuyForm(@ModelAttribute AssetTransaction metalAssetTransaction) {
-        logger.info("Submitted Metal: " + metalAssetTransaction.toString());
-        assetService.saveAssetTransaction(metalAssetTransaction);
+    @PostMapping("/asset_create")
+    public String currencyBuyForm(@ModelAttribute AssetTransaction assetTransaction) {
+        logger.info("Submitted Currency: " + assetTransaction.toString());
+        assetService.saveAssetTransaction(assetTransaction);
         return "index";
     }
 
-    @GetMapping("/metal_sell")
-    public String metalSell(Model model) {
-        logger.info("Redirecting to metal_sell.html");
-        AssetTransaction currencyAssetTransaction = new AssetTransaction();
-        currencyAssetTransaction.setAssetClass(AssetClass.METAL.toString());
-        currencyAssetTransaction.setTransactionType(TransactionType.SELL.toString());
-        model.addAttribute("metal", currencyAssetTransaction);
-        return "metal_sell";
+
+    @GetMapping("/asset_mod")
+    public String currencyModify(Model model) {
+        logger.info("Redirecting to asset_mod.html");
+        List<AssetTransaction> assets = assetService.getAllAssetTransactions();
+        model.addAttribute("assets", assets);
+        return "asset_mod";
     }
 
-    @PostMapping("/metal_sell")
-    public String metalSellForm(@ModelAttribute AssetTransaction metalAssetTransaction) {
-        logger.info("Submitted Metal: " + metalAssetTransaction.toString());
-        assetService.saveAssetTransaction(metalAssetTransaction);
-        return "index";
+    @GetMapping("/asset_remove")
+    public String currencyRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, @RequestParam(name="transaction_type") String transactionType, Model model) {
+        logger.info("Redirecting to asset_remove.html");
+        assetService.removeAsset(timestamp,longName,shortName,transactionType,AssetClass.CURRENCY);
+        List<AssetTransaction> assets = assetService.getAllAssetTransactions();
+        model.addAttribute("assets", assets);
+        return "asset_mod";
     }
 
-    @GetMapping("/metal_mod")
-    public String metalModify(Model model) {
-        logger.info("Redirecting to metal_mod.html");
-        List<AssetTransaction> metals = assetService.getAllAssetTransactions(AssetClass.METAL);
-        model.addAttribute("metals", metals);
-        return "metal_mod";
-    }
-
-    @GetMapping("/metal_remove")
-    public String metalRemove(@RequestParam(name="timestamp") String timestamp, @RequestParam(name="long_name") String longName, @RequestParam(name="short_name") String shortName, @RequestParam(name="transaction_type") String transactionType, Model model) {
-        logger.info("Redirecting to metal_remove.html");
-        assetService.removeAsset(timestamp,longName,shortName,transactionType,AssetClass.METAL);
-        List<AssetTransaction> metals = assetService.getAllAssetTransactions(AssetClass.METAL);
-        model.addAttribute("metals", metals);
-        return "metal_mod";
-    }
 
 
 }

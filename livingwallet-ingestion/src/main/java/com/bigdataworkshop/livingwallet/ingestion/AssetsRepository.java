@@ -1,6 +1,7 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
 import com.bigdataworkshop.wallet.model.AssetClass;
+import com.bigdataworkshop.wallet.model.AssetRate;
 import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.bigdataworkshop.wallet.model.TransactionType;
 import org.influxdb.InfluxDB;
@@ -31,10 +32,28 @@ public class AssetsRepository {
         logger.info(response.getVersion());
     }
 
-    public void saveAssetRate(AssetTransaction currencyAssetTransaction, AssetClass assetClass){
-        Point point = Point.measurement("currency_rates").time(currencyAssetTransaction.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
-                            .tag("currency", currencyAssetTransaction.getAssetShortName())
-                            .addField("rate", currencyAssetTransaction.getPricing())
+    public void saveAssetRate(AssetRate assetRate){
+
+        String assetRateMesurement;
+
+        switch (assetRate.getAssetClass()) {
+            case "CURRENCY":
+                assetRateMesurement = "currency_rates";
+                break;
+
+            case "METAL":
+                assetRateMesurement = "metal_rates";
+                break;
+
+            default:
+                assetRateMesurement = "";
+                break;
+
+        }
+
+        Point point = Point.measurement(assetRateMesurement).time(assetRate.getPricingDate().toEpochMilli(), TimeUnit.MILLISECONDS)
+                            .tag("currency", assetRate.getAssetName())
+                            .addField("rate", assetRate.getRate())
                             .build();
         influxDB.write(point);
 
@@ -42,38 +61,48 @@ public class AssetsRepository {
 
 
 
-    public void saveAssetTransaction(AssetTransaction currencyAssetTransaction, AssetClass assetClass){
-
-        String measurementName;
-
-        switch(assetClass) {
-            case CURRENCY:
-                measurementName = "asset_transactions";
-                break;
-            case METAL:
-                measurementName = "asset_transactions";
-                break;
-            default:
-                measurementName = "";
-                break;
-        }
+    public void saveAssetTransaction(AssetTransaction assetTransaction, AssetClass assetClass){
 
 
 
-        Point point = Point.measurement(measurementName).time(currencyAssetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
-                .tag("short_name", currencyAssetTransaction.getAssetShortName())
-                .tag("long_name", currencyAssetTransaction.getAssetLongName())
-                .tag("transaction_type",currencyAssetTransaction.getTransactionType())
-                .addField("description", currencyAssetTransaction.getAssetDescription())
-                .addField("pricing", currencyAssetTransaction.getPricing())
-                .addField("number_units", (currencyAssetTransaction.getTransactionType().equals("BUY")) ? currencyAssetTransaction.getNumberUnits() : (-1) * currencyAssetTransaction.getNumberUnits())
-                .addField("asset_class", currencyAssetTransaction.getAssetClass())
+        Point point = Point.measurement("asset_transactions").time(assetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
+                .tag("short_name", assetTransaction.getAssetShortName())
+                .tag("long_name", assetTransaction.getAssetLongName())
+                .tag("transaction_type",assetTransaction.getTransactionType())
+                .addField("description", assetTransaction.getAssetDescription())
+                .addField("pricing", assetTransaction.getPricing())
+                .addField("number_units", (assetTransaction.getTransactionType().equals("BUY")) ? assetTransaction.getNumberUnits() : (-1) * assetTransaction.getNumberUnits())
+                .addField("asset_class", assetTransaction.getAssetClass())
                 .build();
         influxDB.write(point);
+
+//counter transaction - sell asset convert into PLN Currency asset
+        if(assetTransaction.getTransactionType().equals("SELL")) {
+            Point sellPoint = Point.measurement("asset_transactions").time(assetTransaction.getPricingDateFormatted().toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.of("Z")), TimeUnit.SECONDS)
+                    .tag("short_name", "PLN")
+                    .tag("long_name", "cash from sell transaction")
+                    .tag("transaction_type", TransactionType.BUY.toString())
+                    .addField("description", "cash from sell transaction")
+                    .addField("pricing", assetTransaction.getPricing())
+                    .addField("number_units", assetTransaction.getNumberUnits())
+                    .addField("asset_class", AssetClass.CURRENCY.toString())
+                    .build();
+            influxDB.write(sellPoint);
+        }
     }
 
 
-    public List<AssetTransaction> getAllAssetTransactions(AssetClass assetClass){
+    public List<AssetTransaction> getAllAssetTransactions(){
+
+
+        Query query = new Query("SELECT * FROM asset_transactions");
+        List<AssetTransaction> assetTransactions = mapper.query(query, AssetTransaction.class);
+        logger.info("Number of Assets retrieved: " + assetTransactions.size());
+        return assetTransactions;
+
+    }
+
+    public List<AssetTransaction> getAssetTransactionsByClass(AssetClass assetClass){
 
         Query query;
         switch(assetClass) {

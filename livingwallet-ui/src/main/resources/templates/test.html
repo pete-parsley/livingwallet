@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Buy Page</title>
+</head>
+<body>
+<p>Buy Asset:</p>
+<form action="/asset_create" method="post">
+   <table cellpadding="5">
+       <tr>
+           <td>Asset in Wallet</td>
+           <td><input onclick="javascript:assetCheck();"  type="radio" id="currency" name="assetClass" value="CURRENCY" checked>
+               <label  for="currency">Currency</label>
+               <input onclick="javascript:assetCheck();"  type="radio" id="metal" name="assetClass" value="METAL" >
+               <label  for="metal">Metals</label>
+           </td>
+       </tr>
+       <tr>
+           <td>Asset Short Name</td>
+           <td><div id="currencyDiv">
+               <select id="assetShortName1" placeholder="assetShortName" name="assetShortName">
+                   <option value="USD">USD</option>
+                   <option value="CHF">CHF</option>
+                   <option value="EUR">EUR</option>
+                   <option value="PLN">PLN</option>
+               </select>
+           </div>
+            <div id="metalDiv" style="visibility:hidden">
+                <select id="assetShortName2" placeholder="assetShortName" name="assetShortName">
+                    <option value="SILVER">SILVER</option>
+                    <option value="GOLD">GOLD</option>
+                </select>
+
+            </div>
+           </td>
+       </tr>
+       <tr>
+           <td><label for="assetLongName">Long Name</label></td>
+           <td><input type="text" id="assetLongName" placeholder="assetLongName" name="assetLongName" value=""></td>
+       </tr>
+       <tr>
+           <td><label for="assetDescription">Description</label></td>
+           <td><input type="text" id="assetDescription" placeholder="assetDescription" name="assetDescription" value=""></td>
+       </tr>
+       <tr>
+           <td><label for="pricing">Pricing</label></td>
+           <td> <input type="text" id="pricing" placeholder="pricing" name="pricing" value="0.0"></td>
+       </tr>
+       <tr>
+           <td><label for="pricingDateFormatted">Pricing Date</label></td>
+           <td><input type="date"  id="pricingDateFormatted" placeholder="pricingDateFormatted" name="pricingDateFormatted" value=""></td>
+       </tr>
+       <tr>
+           <td><label for="numberUnits">Number of Units</label></td>
+           <td> <input type="text" id="numberUnits" placeholder="numberUnits" name="numberUnits" value="0.0"></td>
+       </tr>
+       <tr>
+           <td><label for="transactionType">Transaction Type</label></td>
+           <td> <input type="text" id="transactionType" placeholder="transactionType" readonly name="transactionType" value=""></td>
+       </tr>
+       <tr><td><input type="submit" value="Add Currency Asset"></td><td></td></tr>
+   </table>
+</form>
+<br>
+<a href="/home"><-HOME PAGE</a>
+<script type="text/javascript">
+function assetCheck() {
+    if (document.getElementById('currency').checked) {
+        document.getElementById('currencyDiv').style.visibility = 'visible';
+		document.getElementById('metalDiv').style.visibility = 'hidden';
+    }
+    else {
+		document.getElementById('metalDiv').style.visibility = 'visible';
+		document.getElementById('currencyDiv').style.visibility = 'hidden';
+	}
+
+}
+</script>
+</body>
+</html>

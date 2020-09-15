@@ -1,6 +1,7 @@
 package com.bigdataworkshop.livingwallet.ingestion;
 
 import com.bigdataworkshop.wallet.model.AssetClass;
+import com.bigdataworkshop.wallet.model.AssetRate;
 import com.bigdataworkshop.wallet.model.AssetTransaction;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,14 +22,6 @@ public class KafkaAssetConsumer {
     AssetsRepository assetsRepository;
     ObjectMapper objectMapper = new ObjectMapper().registerModule(new Jdk8Module()).registerModule(new JavaTimeModule());
 
-    @KafkaListener(topics = "currency_rates", groupId = "group_id")
-    public void consumeCurrencyRates(String message) throws JsonProcessingException {
-        logger.info(String.format("$$ -> Consumed Message -> %s", message));
-        JsonNode currencyRateJson = objectMapper.readTree(message);
-        AssetTransaction currencyAssetTransaction = objectMapper.treeToValue(currencyRateJson, AssetTransaction.class);
-        logger.info(String.format("$$ -> Currency Rate:  -> %s,%s,%s", currencyAssetTransaction.getAssetShortName(), currencyAssetTransaction.getPricing(), currencyAssetTransaction.getPricingDate()));
-        assetsRepository.saveAssetRate(currencyAssetTransaction, AssetClass.CURRENCY);
-    }
 
     @KafkaListener(topics = "currency_assets", groupId = "group_id")
     public void consumeCurrencyAssets(String message) throws JsonProcessingException {
@@ -39,15 +32,6 @@ public class KafkaAssetConsumer {
         assetsRepository.saveAssetTransaction(currencyAssetTransaction, AssetClass.CURRENCY);
     }
 
-    @KafkaListener(topics = "metals_rates", groupId = "group_id")
-    public void consumeMetalsRates(String message) throws JsonProcessingException {
-        logger.info(String.format("$$ -> Consumed Message -> %s", message));
-        JsonNode currencyRateJson = objectMapper.readTree(message);
-        AssetTransaction currencyAssetTransaction = objectMapper.treeToValue(currencyRateJson, AssetTransaction.class);
-        logger.info(String.format("$$ -> Metal Rate:  -> %s,%s,%s", currencyAssetTransaction.getAssetShortName(), currencyAssetTransaction.getPricing(), currencyAssetTransaction.getPricingDate()));
-        assetsRepository.saveAssetRate(currencyAssetTransaction, AssetClass.METAL);
-    }
-
     @KafkaListener(topics = "metals_assets", groupId = "group_id")
     public void consumeMetalsAssets(String message) throws JsonProcessingException {
         logger.info(String.format("$$ -> Consumed Message -> %s", message));
@@ -56,5 +40,25 @@ public class KafkaAssetConsumer {
         logger.info(String.format("$$ -> Metal Asset:  -> %s,%s,%s,%f,%tD", metalAssetTransaction.getAssetShortName(), metalAssetTransaction.getAssetLongName(), metalAssetTransaction.getAssetDescription(), metalAssetTransaction.getPricing(), metalAssetTransaction.getPricingDate()));
         assetsRepository.saveAssetTransaction(metalAssetTransaction, AssetClass.METAL);
     }
+
+    @KafkaListener(topics = "metals_rates", groupId = "group_id")
+    public void consumeMetalsRates(String message) throws JsonProcessingException {
+        logger.info(String.format("$$ -> Consumed Message -> %s", message));
+        JsonNode assetRateJson = objectMapper.readTree(message);
+        AssetRate metalRate = objectMapper.treeToValue(assetRateJson, AssetRate.class);
+        logger.info(String.format("$$ -> Metal Rate:  -> %s,%s,%s", metalRate.getAssetName(), metalRate.getRate(),metalRate.getPricingDate()));
+        assetsRepository.saveAssetRate(metalRate);
+    }
+
+    @KafkaListener(topics = "currency_rates", groupId = "group_id")
+    public void consumeCurrencyRates(String message) throws JsonProcessingException {
+        logger.info(String.format("$$ -> Consumed Message -> %s", message));
+        JsonNode assetRateJson = objectMapper.readTree(message);
+        AssetRate currencyRate = objectMapper.treeToValue(assetRateJson, AssetRate.class);
+        logger.info(String.format("$$ -> Currency Rate:  -> %s,%s,%s", currencyRate.getAssetName(), currencyRate.getRate(),currencyRate.getPricingDate()));
+        assetsRepository.saveAssetRate(currencyRate);
+    }
+
+
 
 }

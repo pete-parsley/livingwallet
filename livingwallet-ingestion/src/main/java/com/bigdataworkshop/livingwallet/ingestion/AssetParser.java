@@ -12,12 +12,12 @@ import java.io.IOException;
 @Component
 public class AssetParser {
 
-    private static final String currencyBaseUrl= "http://stooq.pl";
+    private static final String baseUrl = "http://stooq.pl";
 
 
     public String getCurrencyRate(Currency currency) {
 
-        Document doc = new Document(currencyBaseUrl);
+        Document doc = new Document(baseUrl);
         String parseUrl;
         String rateString = "";
 
@@ -26,17 +26,17 @@ public class AssetParser {
             switch (currency) {
 
                 case USD:
-                    parseUrl = currencyBaseUrl + "/q/?s=usdpln";
+                    parseUrl = baseUrl + "/q/?s=usdpln";
                     doc = Jsoup.connect(parseUrl).get();
                     rateString = parseCurrencyDoc(doc,"usd");
                     break;
                 case EUR:
-                    parseUrl = currencyBaseUrl + "/q/?s=eurpln";
+                    parseUrl = baseUrl + "/q/?s=eurpln";
                     doc = Jsoup.connect(parseUrl).get();
                     rateString = parseCurrencyDoc(doc,"eur");
                     break;
                 case CHF:
-                    parseUrl = currencyBaseUrl + "/q/?s=chfpln";
+                    parseUrl = baseUrl + "/q/?s=chfpln";
                     doc = Jsoup.connect(parseUrl).get();
                     rateString = parseCurrencyDoc(doc,"chf");
                     break;
@@ -53,7 +53,7 @@ public class AssetParser {
 
     public String getMetalRate(Metals metal) {
 
-        Document doc = new Document(currencyBaseUrl);
+        Document doc = new Document(baseUrl);
         String parseUrl;
         String rateString = "";
 
@@ -62,14 +62,14 @@ public class AssetParser {
             switch (metal) {
 
                 case GOLD:
-                    parseUrl = currencyBaseUrl + "/q/?s=xaupln";
+                    parseUrl = baseUrl + "/q/?s=xaupln";
                     doc = Jsoup.connect(parseUrl).get();
-                    rateString = parseCurrencyDoc(doc,"xau");
+                    rateString = parseMetalDoc(doc,"xau");
                     break;
                 case SILVER:
-                    parseUrl = currencyBaseUrl + "/q/?s=xagpln";
+                    parseUrl = baseUrl + "/q/?s=xagpln";
                     doc = Jsoup.connect(parseUrl).get();
-                    rateString = parseCurrencyDoc(doc,"xag");
+                    rateString = parseMetalDoc(doc,"xag");
                     break;
                 default:
                     break;
@@ -89,8 +89,21 @@ public class AssetParser {
         return currencyRateElement.text();
     }
 
-    private String parseMetalDoc(Document document, String currency) {
-        Element metalRateElement =  document.getElementById("aq_" + currency + "pln#1_c3");
+    private String parseMetalDoc(Document document, String metal) {
+        Element metalRateElement;
+
+        switch (metal) {
+            case "xau":
+                metalRateElement =  document.getElementById("aq_" + metal + "pln_c2");
+                break;
+
+            case "xag":
+                metalRateElement =  document.getElementById("aq_" + metal + "pln_c3");
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong metal name");
+        }
+
         return metalRateElement.text();
     }
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+<p>List of available asset Assets:</p>
+<table border="1px">
+    <tr>
+        <th>Pricing Date</th>
+        <th>Short Name</th>
+        <th>Long Name</th>
+        <th>Description</th>
+        <th>Number Units</th>
+        <th>Pricing</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="asset : ${assets}">
+        <td th:text="${asset.pricingDate}"></td>
+        <td th:text="${asset.assetShortName}"></td>
+        <td th:text="${asset.assetLongName}"></td>
+        <td th:text="${asset.assetDescription}"></td>
+        <td th:text="${asset.numberUnits}"></td>
+        <td th:text="${asset.pricing}"></td>
+        <td th:text="${asset.transactionType}"></td>
+        <td><a th:href="@{/asset_remove(timestamp=${asset.pricingDate},long_name=${asset.assetLongName},short_name=${asset.assetShortName},transaction_type=${asset.transactionType})}">REMOVE</a></td>
+    </tr>
+</table>
+<br>
+<a href="/home"><-HOME PAGE</a>
+</body>
+</html>
